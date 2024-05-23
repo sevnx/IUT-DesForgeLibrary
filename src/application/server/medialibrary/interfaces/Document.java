@@ -1,6 +1,6 @@
-package server.media_library.interfaces;
+package server.medialibrary.interfaces;
 
-import server.media_library.Abonne;
+import server.medialibrary.Abonne;
 
 public interface Document {
     int numero();

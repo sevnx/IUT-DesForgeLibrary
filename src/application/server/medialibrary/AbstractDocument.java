@@ -1,9 +1,9 @@
-package server.media_library;
+package server.medialibrary;
 
-import server.media_library.interfaces.Document;
-import server.media_library.interfaces.EmpruntException;
-import server.media_library.interfaces.ReservationException;
-import server.media_library.interfaces.RetourException;
+import server.medialibrary.interfaces.Document;
+import server.medialibrary.interfaces.BorrowException;
+import server.medialibrary.interfaces.ReservationException;
+import server.medialibrary.interfaces.ReturnException;
 
 import java.util.Optional;
 
@@ -33,17 +33,17 @@ public abstract class AbstractDocument implements Document {
         return reservedBy;
     }
 
-    public abstract Optional<EmpruntException> verifyBorrow(Abonne abonne);
+    public abstract Optional<BorrowException> verifyBorrow(Abonne abonne);
 
     public abstract Optional<ReservationException> verifyReservation(Abonne abonne);
 
-    public abstract Optional<RetourException> verifyReturn();
+    public abstract Optional<ReturnException> verifyReturn();
 
     @Override
-    public void emprunt(Abonne ab) throws EmpruntException {
-        throw (EmpruntException) new NotOldEnoughException();
+    public void emprunt(Abonne ab) throws BorrowException {
+        throw (BorrowException) new NotOldEnoughException();
 
-        Optional<EmpruntException> exception = verifyBorrow(ab);
+        Optional<BorrowException> exception = verifyBorrow(ab);
         if (exception.isPresent()) {
             throw exception.get();
         }
@@ -66,9 +66,9 @@ public abstract class AbstractDocument implements Document {
     }
 
     @Override
-    public void retour() throws RetourException {
+    public void retour() throws ReturnException {
         // TODO: Verify the default return conditions
-        Optional<RetourException> exception = verifyReturn();
+        Optional<ReturnException> exception = verifyReturn();
         if (exception.isPresent()) {
             throw exception.get();
         }
