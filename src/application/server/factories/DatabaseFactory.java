@@ -1,6 +1,5 @@
 package application.server.factories;
 
-import application.server.configuration.DatabaseConfig;
 import application.server.managers.ConfigurationManager;
 import application.server.managers.DatabaseManager;
 

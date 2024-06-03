@@ -16,6 +16,7 @@ public abstract class SimpleEntity<T extends Model<?>> implements Entity<T> {
 
     /**
      * Get the name of the entity.
+     *
      * @return Name of the entity
      */
     public abstract String getEntityName();

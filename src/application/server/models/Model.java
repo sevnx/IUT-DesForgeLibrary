@@ -13,21 +13,12 @@ import java.util.Vector;
 /**
  * Generic model class for database operations.
  * Only works with database tables that have an id column as primary key.
+ *
  * @param <T> Mapped entity
  */
 public abstract class Model<T extends Entity<?>> {
-    private final Connection connection;
     private static Optional<String> DATABASE_NAME = Optional.empty();
-
-    public static void setDatabaseName(String databaseName) {
-        if (DATABASE_NAME.isPresent()) {
-            throw new IllegalStateException("Database name already set");
-        }
-        if (databaseName == null || databaseName.isEmpty()) {
-            throw new IllegalArgumentException("Database name cannot be null or empty");
-        }
-        DATABASE_NAME = Optional.of(databaseName);
-    }
+    private final Connection connection;
 
     public Model() {
         this.connection = DatabaseManager.connect();
@@ -47,6 +38,16 @@ public abstract class Model<T extends Entity<?>> {
 
     public String getDatabaseName() {
         return DATABASE_NAME.orElseThrow(() -> new IllegalStateException("Database name not set"));
+    }
+
+    public static void setDatabaseName(String databaseName) {
+        if (DATABASE_NAME.isPresent()) {
+            throw new IllegalStateException("Database name already set");
+        }
+        if (databaseName == null || databaseName.isEmpty()) {
+            throw new IllegalArgumentException("Database name cannot be null or empty");
+        }
+        DATABASE_NAME = Optional.of(databaseName);
     }
 
     public abstract T getEntityInstance();

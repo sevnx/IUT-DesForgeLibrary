@@ -22,7 +22,8 @@ public class SimpleAbonne extends SimpleEntity<SubscriberModel> implements Abonn
         this.birthday = birthday;
     }
 
-    public SimpleAbonne() {}
+    public SimpleAbonne() {
+    }
 
     @Override
     public int getId() {

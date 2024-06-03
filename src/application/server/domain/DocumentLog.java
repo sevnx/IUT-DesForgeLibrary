@@ -17,7 +17,8 @@ public class DocumentLog extends SimpleEntity<DocumentLogModel> {
     private DocumentState newState;
     private Date time;
 
-    public DocumentLog() {}
+    public DocumentLog() {
+    }
 
     public DocumentLog(int id, Abonne subscriber, Document document, DocumentState newState, Date time) {
         this.id = id;

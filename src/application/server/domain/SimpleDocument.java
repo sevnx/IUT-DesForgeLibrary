@@ -1,6 +1,9 @@
 package application.server.domain;
 
-import application.server.domain.core.*;
+import application.server.domain.core.Abonne;
+import application.server.domain.core.EmpruntException;
+import application.server.domain.core.ReservationException;
+import application.server.domain.core.RetourException;
 import application.server.models.DocumentModel;
 
 import java.sql.ResultSet;
@@ -55,7 +58,8 @@ public class SimpleDocument extends AbstractDocument {
                 this.lastLog = new DocumentLog(getId(), ab, this, newState, Calendar.getInstance().getTime());
                 this.lastLog.save();
             }
-        } catch (SQLException ignored) {}
+        } catch (SQLException ignored) {
+        }
     }
 
     @Override

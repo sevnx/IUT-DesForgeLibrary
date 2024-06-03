@@ -15,14 +15,6 @@ public enum DocumentState {
         this.name = name;
     }
 
-    public int getStateId() {
-        return stateId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public static Optional<DocumentState> fromInt(int stateId) {
         for (DocumentState state : DocumentState.values()) {
             if (state.getStateId() == stateId) {
@@ -30,5 +22,13 @@ public enum DocumentState {
             }
         }
         return Optional.empty();
+    }
+
+    public int getStateId() {
+        return stateId;
+    }
+
+    public String getName() {
+        return name;
     }
 }
