@@ -1,4 +1,4 @@
-package server.media_library;
+package application.server.medialibrary;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -6,20 +6,24 @@ import java.time.Period;
 public class Abonne {
     private final int id;
     private final String name;
-    private final LocalDate birthday;
+    private final LocalDate birthdate;
 
-    public Abonne(int id, String name, LocalDate birthday) {
+    public Abonne(int id, String name, LocalDate birthdate) {
         this.id = id;
         this.name = name;
-        this.birthday = birthday;
+        this.birthdate = birthdate;
     }
 
     public int getId() {
-        return id;
+        return this.id;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     public int getAge() {
-        return Period.between(birthday, LocalDate.now()).getYears();
+        return Period.between(this.birthdate, LocalDate.now()).getYears();
     }
 
     // TODO: Gerinimo BretteSoft Certification (isBanned)

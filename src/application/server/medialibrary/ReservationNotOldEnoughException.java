@@ -1,6 +1,6 @@
-package server.media_library;
+package application.server.medialibrary;
 
-import server.media_library.interfaces.ReservationException;
+import server.medialibrary.interfaces.ReservationException;
 
 /**
 * Duplicate with `{@link NotOldEnoughException} caused by interface signatures

@@ -6,42 +6,63 @@ import java.net.Socket;
 import java.lang.reflect.InvocationTargetException;
 
 public class Server implements Runnable {
-    private final int port;
-    private final String name;
+    private final int serverPort;
+    private final String serverName;
     private final ServerSocket listenSocket;
     private final Class<? extends Service> serviceClass;
-    private Service actualServiceClass;
+    private Service currentServiceClass;
+    private volatile boolean isRunning = false;
 
-    public Server(Class<? extends Service> serviceClass, int port, String name) throws IOException {
+    public Server(Class<? extends Service> serviceClass, int serverPort, String serverName) throws IOException {
+        this.serverPort = serverPort;
+        this.serverName = serverName;
+        this.listenSocket = new ServerSocket(serverPort);
         this.serviceClass = serviceClass;
-        this.listenSocket = new ServerSocket(port);
-        this.actualServiceClass = null;
-        this.port = port;
-        this.name = name;
+        this.currentServiceClass = null;
     }
 
-    public Server(Class<? extends Service> serviceClass, int port) throws IOException {
-        this(serviceClass, port, "Not defined");
+    public Server(Class<? extends Service> serviceClass, int serverPort) throws IOException {
+        this(serviceClass, serverPort, "Not defined");
     }
 
     public String getName() {
-        return this.name;
+        return this.serverName;
     }
     
-    // TODO: Implement getIp method
+    public String getIp() {
+        return "127.0.0.1:" + this.serverPort;
+    }
 
     public ServerSocket getListenSocket() {
         return listenSocket;
     }
 
-    // TODO: Refactor this method
     public void run() {
-        while (!this.listenSocket.isClosed()) {
-            try {
-                new Thread(this.service.getConstructor(Socket.class).newInstance(this.listenSocket.accept())).start();
-            } catch (IllegalAccessException | InstantiationException | InvocationTargetException | IOException | NoSuchMethodException e) {
-                System.err.println("Error opening server: " + e.getMessage());
+        isRunning = true;
+        try {
+            while (isRunning) {
+                currentServiceClass = this.serviceClass.getConstructor(Socket.class).newInstance(this.listenSocket.accept());
+                currentServiceClass.start();
             }
+        } catch (NoSuchMethodException e) {
+            try {
+                this.listenSocket.close();
+            } catch (IOException ignored) {
+            } System.err.println("Problem on the listening serverPort: " + e);
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | IOException e) {
+            e.printStackTrace();
         }
+    }
+
+    public void start() {
+        new Thread(this).start();
+    }
+
+    public void stop() throws IOException {
+        isRunning = false;
+        if (this.currentServiceClass != null) {
+            this.currentServiceClass.close();
+        }
+        this.getListenSocket().close();
     }
 }

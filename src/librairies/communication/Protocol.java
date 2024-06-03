@@ -16,10 +16,6 @@ public abstract class Protocol {
         setupCommunication();
     }
 
-    abstract public String encode(String data);
-
-    abstract public String decode(String data);
-
     public void setupCommunication() throws IOException {
         try {
             this.in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
@@ -54,11 +50,12 @@ public abstract class Protocol {
             if (out != null) {
                 out.close();
             }
-            if (socket != null && !socket.isClosed()) {
-                socket.close();
-            }
         } catch (IOException e) {
             System.err.println("Error closing communication: " + e.getMessage());
         }
     }
+
+    abstract public String encode(String data);
+
+    abstract public String decode(String data);
 }

@@ -1,36 +1,56 @@
 package librairies.server;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.Socket;
-import java.io.BufferedReader;
-import java.io.PrintWriter;
+import librairies.communication.Protocol;
 
-public abstract class Service implements Runnable {
-    private final Socket client;
-    private final BufferedReader in;
-    private final PrintWriter out;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.Socket;
+import java.net.SocketException;
+import java.util.List;
+
+public abstract class Service extends SocketProtocolLink {
+    private boolean needToWait = true;
+    private volatile boolean isRunning = false;
+
+    public Service(Socket socket, Class<? extends Protocol> protocol) throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
+        super(socket, protocol);
+    }
 
     public Service(Socket socket) throws IOException {
-        this.client = socket;
-        this.in = new BufferedReader(new InputStreamReader(this.client.getInputStream()));
-        this.out = new PrintWriter(this.client.getOutputStream(), true);
+        super(socket);
     }
 
-    // TODO: Implement run method in ServiceEmprunt + ServiceReservation + ServiceRetour
-    protected Socket getClient() {
-        return this.client;
+    public void stopWaiting() {
+        needToWait = false;
     }
 
-    // TODO: Implement run method in ServiceEmprunt + ServiceReservation + ServiceRetour
-    protected BufferedReader getIn() {
-        return this.in;
+    protected abstract List<Class<? extends Component>> componentList();
+
+    @Override
+    public void run() {
+        isRunning = true;
+        try {
+            while (isRunning) {
+                this.protocol.setupCommunication();
+                for(Class<? extends Component> component : componentList()) {
+                    component.getConstructor().newInstance().call(this);
+                }
+                while (this.needToWait);
+            }
+        } catch (SocketException ignored) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    // TODO: Implement run method in ServiceEmprunt + ServiceReservation + ServiceRetour
-    protected PrintWriter getOut() {
-        return this.out;
+    public void start() {
+        new Thread(this).start();
     }
 
-    // TODO: Define a checkSubscriber method (checkDocument is already defined)
+    public void close() throws IOException {
+        this.client.close();
+        this.protocol.close();
+    }
 }

@@ -1,4 +1,4 @@
-package server.medialibrary.interfaces;
+package application.server.medialibrary.interfaces;
 
 public abstract class ReturnException extends DocumentException {
     public ReturnException(String message) {

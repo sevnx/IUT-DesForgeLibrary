@@ -1,9 +1,9 @@
-package server.medialibrary;
+package application.server.medialibrary;
 
-import server.medialibrary.interfaces.Document;
-import server.medialibrary.interfaces.BorrowException;
-import server.medialibrary.interfaces.ReservationException;
-import server.medialibrary.interfaces.ReturnException;
+import application.server.medialibrary.interfaces.Document;
+import application.server.medialibrary.interfaces.BorrowException;
+import application.server.medialibrary.interfaces.ReservationException;
+import application.server.medialibrary.interfaces.ReturnException;
 
 import java.util.Optional;
 
