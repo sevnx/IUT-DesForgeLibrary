@@ -1,4 +1,4 @@
-package application.server.medialibrary.domain.core;
+package application.server.domain.core;
 
 public interface Abonne {
     int getId();

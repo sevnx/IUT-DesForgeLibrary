@@ -1,4 +1,4 @@
-package application.server.medialibrary.domain;
+package application.server.domain;
 
 import java.util.Optional;
 

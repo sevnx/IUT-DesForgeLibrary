@@ -1,26 +1,43 @@
-package application.server.medialibrary.models;
+package application.server.models;
+
+import application.server.domain.core.Entity;
+import application.server.managers.DatabaseManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.Vector;
 
 /**
  * Generic model class for database operations.
- * @param <T> Mapped entity class
+ * Only works with database tables that have an id column as primary key.
+ * @param <T> Mapped entity
  */
-public abstract class Model<T> {
-    private static final String DATABASE_NAME = "deslibrary";
+public abstract class Model<T extends Entity<?>> {
     private final Connection connection;
+    private static Optional<String> DATABASE_NAME = Optional.empty();
 
-    public Model(Connection connection) {
-        this.connection = connection;
+    public static void setDatabaseName(String databaseName) {
+        if (DATABASE_NAME.isPresent()) {
+            throw new IllegalStateException("Database name already set");
+        }
+        if (databaseName == null || databaseName.isEmpty()) {
+            throw new IllegalArgumentException("Database name cannot be null or empty");
+        }
+        DATABASE_NAME = Optional.of(databaseName);
+    }
+
+    public Model() {
+        this.connection = DatabaseManager.connect();
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 
     public abstract void save(T entity) throws SQLException;
-
-    public abstract T mapEntity(ResultSet resultSet) throws SQLException;
 
     public String getFullTableName() {
         return getDatabaseName() + "." + getTableName();
@@ -29,8 +46,10 @@ public abstract class Model<T> {
     public abstract String getTableName();
 
     public String getDatabaseName() {
-        return DATABASE_NAME;
+        return DATABASE_NAME.orElseThrow(() -> new IllegalStateException("Database name not set"));
     }
+
+    public abstract T getEntityInstance();
 
     public Vector<T> get() throws SQLException {
         try {
@@ -43,6 +62,11 @@ public abstract class Model<T> {
         } catch (SQLException e) {
             throw new SQLException("Error while fetching entries from database", e);
         }
+    }
+
+    private T mapEntity(ResultSet resultSet) throws SQLException {
+        T entity = getEntityInstance();
+        return (T) entity.mapEntity(resultSet);
     }
 
     public T get(int id) throws SQLException {
