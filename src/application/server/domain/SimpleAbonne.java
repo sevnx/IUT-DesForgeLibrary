@@ -12,14 +12,17 @@ import java.time.Period;
 
 public class SimpleAbonne extends SimpleEntity<SubscriberModel> implements Abonne {
     private int id;
-    private String name;
-    private LocalDate birthday;
+    private String firstName;
+    private String lastName;
+    private LocalDate birthdate;
     private boolean banned;
 
-    public SimpleAbonne(int id, String name, LocalDate birthday, boolean banned) {
+    public SimpleAbonne(int id, String firstName, String lastName, LocalDate birthdate) {
         this.id = id;
-        this.name = name;
-        this.birthday = birthday;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthdate = birthdate;
+        this.banned = false;
     }
 
     public SimpleAbonne() {
@@ -33,9 +36,10 @@ public class SimpleAbonne extends SimpleEntity<SubscriberModel> implements Abonn
     @Override
     public Entity<SubscriberModel> mapEntity(ResultSet resultSet) throws SQLException {
         this.id = resultSet.getInt("id");
-        this.name = resultSet.getString("name");
-        this.birthday = resultSet.getDate("birthday").toLocalDate();
-        this.banned = resultSet.getBoolean("banned");
+        this.firstName = resultSet.getString("firstName");
+        this.lastName = resultSet.getString("lastName");
+        this.birthdate = resultSet.getDate("birthdate").toLocalDate();
+        this.banned = resultSet.getBoolean("isBanned");
 
         return this;
     }
@@ -54,12 +58,12 @@ public class SimpleAbonne extends SimpleEntity<SubscriberModel> implements Abonn
     }
 
     public String getName() {
-        return name;
+        return firstName + " " + lastName;
     }
 
     @Override
     public int getAge() {
-        return Period.between(birthday, LocalDate.now()).getYears();
+        return Period.between(birthdate, LocalDate.now()).getYears();
     }
 
     @Override

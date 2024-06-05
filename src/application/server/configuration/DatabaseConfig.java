@@ -9,7 +9,7 @@ public record DatabaseConfig(
         String databasePassword,
         String databaseName
 ) {
-    private static String DATABASE_CONFIG_FILE_PATH = "config/database.json";
+    private static String DATABASE_CONFIG_FILE_PATH = "./config/database_config.json";
 
     public DatabaseConfig {
         Objects.requireNonNull(databaseHost, "The database host must not be null");

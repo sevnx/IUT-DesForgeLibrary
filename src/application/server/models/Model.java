@@ -17,15 +17,10 @@ import java.util.Vector;
  * @param <T> Mapped entity
  */
 public abstract class Model<T extends Entity<?>> {
-    private static Optional<String> DATABASE_NAME = Optional.empty();
     private final Connection connection;
 
     public Model() {
         this.connection = DatabaseManager.connect();
-    }
-
-    public Connection getConnection() {
-        return connection;
     }
 
     public abstract void save(T entity) throws SQLException;
@@ -37,17 +32,7 @@ public abstract class Model<T extends Entity<?>> {
     public abstract String getTableName();
 
     public String getDatabaseName() {
-        return DATABASE_NAME.orElseThrow(() -> new IllegalStateException("Database name not set"));
-    }
-
-    public static void setDatabaseName(String databaseName) {
-        if (DATABASE_NAME.isPresent()) {
-            throw new IllegalStateException("Database name already set");
-        }
-        if (databaseName == null || databaseName.isEmpty()) {
-            throw new IllegalArgumentException("Database name cannot be null or empty");
-        }
-        DATABASE_NAME = Optional.of(databaseName);
+        return DatabaseManager.getDatabaseName().orElseThrow(() -> new IllegalStateException("Database name not set"));
     }
 
     public abstract T getEntityInstance();
@@ -84,7 +69,7 @@ public abstract class Model<T extends Entity<?>> {
         try {
             return connection
                     .createStatement()
-                    .executeQuery("SELECT * FROM" + getFullTableName());
+                    .executeQuery("SELECT * FROM " + getFullTableName());
         } catch (SQLException e) {
             throw new SQLException("Error while fetching entries from database", e);
         }
@@ -94,7 +79,7 @@ public abstract class Model<T extends Entity<?>> {
         try {
             return connection
                     .createStatement()
-                    .executeQuery("SELECT * FROM" + getFullTableName() + " WHERE id = " + id);
+                    .executeQuery("SELECT * FROM " + getFullTableName() + " WHERE id = " + id);
         } catch (SQLException e) {
             throw new SQLException("Error while fetching entry from database", e);
         }

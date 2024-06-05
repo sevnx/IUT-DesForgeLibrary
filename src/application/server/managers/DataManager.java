@@ -7,17 +7,17 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DataManager {
-    private static final ConcurrentHashMap<String, Entity> entityMap = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, Entity<?>> entityMap = new ConcurrentHashMap<>();
 
-    public static void addEntity(Entity entity) {
+    public static void addEntity(Entity<?> entity) {
         entityMap.put(entity.getIdentifier(), entity);
     }
 
-    public static Entity getEntity(String identifier) {
+    public static Entity<?> getEntity(String identifier) {
         return entityMap.get(identifier);
     }
 
-    public static List<Entity> getEntities() {
+    public static List<Entity<?>> getEntities() {
         return new ArrayList<>(entityMap.values());
     }
 }

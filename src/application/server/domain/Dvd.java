@@ -36,7 +36,7 @@ public class Dvd extends AbstractDocument {
     public Entity<DocumentModel> mapEntity(ResultSet resultSet) throws SQLException {
         this.setId(resultSet.getInt("id"));
         this.document = null;
-        this.adult = resultSet.getBoolean("adult");
+        this.adult = resultSet.getBoolean("isForAdult");
 
         return this;
     }

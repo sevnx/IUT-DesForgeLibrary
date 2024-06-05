@@ -32,6 +32,10 @@ public class DatabaseManager {
                 CONNECTION_DATABASE.isPresent();
     }
 
+    public static Optional<String> getDatabaseName() {
+        return CONNECTION_DATABASE;
+    }
+
     private static Connection generateConnection() throws SQLException {
         if (!isDatabaseSet()) {
             throw new IllegalStateException("Database connection parameters not set");
@@ -46,12 +50,11 @@ public class DatabaseManager {
         try {
             if (connection != null && !connection.isClosed()) return connection;
 
-            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DatabaseManager.generateConnection();
             connection.setAutoCommit(true);
             return connection;
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

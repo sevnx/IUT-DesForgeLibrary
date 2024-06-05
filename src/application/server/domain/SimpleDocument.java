@@ -58,7 +58,8 @@ public class SimpleDocument extends AbstractDocument {
                 this.lastLog = new DocumentLog(getId(), ab, this, newState, Calendar.getInstance().getTime());
                 this.lastLog.save();
             }
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while saving document log :", e);
         }
     }
 
@@ -76,7 +77,7 @@ public class SimpleDocument extends AbstractDocument {
         this.setId(resultSet.getInt("id"));
         this.setTitle(resultSet.getString("title"));
 
-        Optional<DocumentState> state = DocumentState.fromInt(resultSet.getInt("state"));
+        Optional<DocumentState> state = DocumentState.fromInt(resultSet.getInt("idState"));
         if (state.isPresent()) {
             this.state = state.get();
         } else {
@@ -84,11 +85,6 @@ public class SimpleDocument extends AbstractDocument {
         }
 
         return this;
-    }
-
-    @Override
-    public String getEntityName() {
-        return "";
     }
 
     @Override
