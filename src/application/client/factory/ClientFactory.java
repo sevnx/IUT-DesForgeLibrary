@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 public class ClientFactory {
-    private static final int DEFAULT_CLIENT_PORT = 1001;
+    private static final int DEFAULT_CLIENT_PORT = 4000;
     private static final String DEFAULT_CLIENT_HOST = "localhost";
 
     /**

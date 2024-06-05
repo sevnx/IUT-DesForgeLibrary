@@ -1,5 +1,8 @@
 package application.server.services.returns.components;
 
+import application.server.domain.entities.types.DocumentEntity;
+import application.server.domain.entities.types.DvdEntity;
+import application.server.managers.DataManager;
 import librairies.server.Component;
 import librairies.server.Service;
 

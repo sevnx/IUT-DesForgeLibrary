@@ -1,8 +1,8 @@
 package application.server.models;
 
-import application.server.domain.Dvd;
+import application.server.domain.entities.types.DvdEntity;
 
-public class DvdModel extends Model<Dvd> {
+public class DvdModel extends Model<DvdEntity> {
 
     /**
      * As the application doesn't handle modifying entities, this method is empty.
@@ -10,8 +10,7 @@ public class DvdModel extends Model<Dvd> {
      * @param entity The entity to save
      */
     @Override
-    public void save(Dvd entity) {
-    }
+    public void save(DvdEntity entity) {}
 
     @Override
     public String getTableName() {
@@ -19,7 +18,7 @@ public class DvdModel extends Model<Dvd> {
     }
 
     @Override
-    public Dvd getEntityInstance() {
-        return new Dvd();
+    public DvdEntity getEntityInstance() {
+        return new DvdEntity();
     }
 }

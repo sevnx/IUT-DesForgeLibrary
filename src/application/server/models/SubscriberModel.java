@@ -1,17 +1,17 @@
 package application.server.models;
 
-import application.server.domain.SimpleAbonne;
+import application.server.domain.entities.types.SimpleAbonneEntity;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class SubscriberModel extends Model<SimpleAbonne> {
+public class SubscriberModel extends Model<SimpleAbonneEntity> {
     public SubscriberModel() {
         super();
     }
 
     @Override
-    public void save(SimpleAbonne entity) throws SQLException {
+    public void save(SimpleAbonneEntity entity) throws SQLException {
         int id = entity.getId();
         boolean banned = entity.isBanned();
 
@@ -28,7 +28,7 @@ public class SubscriberModel extends Model<SimpleAbonne> {
     }
 
     @Override
-    public SimpleAbonne getEntityInstance() {
-        return new SimpleAbonne();
+    public SimpleAbonneEntity getEntityInstance() {
+        return new SimpleAbonneEntity();
     }
 }

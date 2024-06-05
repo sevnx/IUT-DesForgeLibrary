@@ -1,19 +1,24 @@
-package application.server.domain;
+package application.server.domain.entities.types;
 
-import application.server.domain.core.Abonne;
-import application.server.domain.core.EmpruntException;
-import application.server.domain.core.ReservationException;
-import application.server.domain.core.RetourException;
+import application.server.domain.entities.interfaces.Abonne;
+import application.server.domain.entities.interfaces.EmpruntException;
+import application.server.domain.entities.interfaces.ReservationException;
+import application.server.domain.entities.interfaces.RetourException;
+import application.server.domain.enums.DocumentState;
+import application.server.managers.TimerManager;
 import application.server.models.DocumentModel;
+import application.server.timer.tasks.BorrowTask;
+import application.server.timer.tasks.ReservationTask;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Optional;
 
-public class SimpleDocument extends AbstractDocument {
+public final class SimpleDocumentEntity extends DocumentEntity {
     private DocumentState state;
-    private DocumentLog lastLog;
+    private DocumentLogEntity lastLog;
 
     public DocumentState getState() {
         synchronized (this) {
@@ -26,7 +31,10 @@ public class SimpleDocument extends AbstractDocument {
         switch (getState()) {
             case BORROWED -> throw new ReservationException("Document is already borrowed");
             case RESERVED -> throw new ReservationException("Document is already reserved");
-            case FREE -> processLog(ab, DocumentState.RESERVED);
+            case FREE -> {
+                TimerManager.startTimer("TODO",new ReservationTask(ab, this));
+                processLog(ab, DocumentState.RESERVED);
+            }
         }
     }
 
@@ -40,6 +48,7 @@ public class SimpleDocument extends AbstractDocument {
                     if (subscriber.isEmpty() || !subscriber.get().equals(ab)) {
                         throw new EmpruntException("Document is reserved by another subscriber");
                     }
+                    TimerManager.stopTimer("TODO");
                     processBorrow(ab);
                 }
             }
@@ -47,7 +56,12 @@ public class SimpleDocument extends AbstractDocument {
         }
     }
 
+    public String getBorrowTimerTaskIdentifier(Abonne ab) {
+        return BorrowTask.class.getName() + "-" + ab.getId() + "-" + numero();
+    }
+
     public void processBorrow(Abonne ab) throws EmpruntException {
+        TimerManager.startTimer(getBorrowTimerTaskIdentifier(ab), new BorrowTask(ab));
         processLog(ab, DocumentState.BORROWED);
     }
 
@@ -55,7 +69,7 @@ public class SimpleDocument extends AbstractDocument {
         try {
             synchronized (this) {
                 this.state = newState;
-                this.lastLog = new DocumentLog(getId(), ab, this, newState, Calendar.getInstance().getTime());
+                this.lastLog = new DocumentLogEntity(getId(), ab, this, newState, LocalDateTime.now());
                 this.lastLog.save();
             }
         } catch (SQLException e) {
@@ -68,12 +82,20 @@ public class SimpleDocument extends AbstractDocument {
         switch (getState()) {
             case FREE -> throw new RetourException("Document is already free");
             case RESERVED -> throw new RetourException("Document is reserved");
-            case BORROWED -> processLog(null, DocumentState.FREE);
+            case BORROWED -> {
+                processLog(null, DocumentState.FREE);
+                Abonne ab = this.lastLog.getSubscriber().orElseThrow(() -> new RetourException("No subscriber found"));
+                try {
+                    TimerManager.stopTimer(getBorrowTimerTaskIdentifier(ab));
+                } catch (IllegalArgumentException e) {
+                    throw new RetourException("Vous avez été banis");
+                }
+            }
         }
     }
 
     @Override
-    public SimpleDocument mapEntity(ResultSet resultSet) throws SQLException {
+    public SimpleDocumentEntity mapEntity(ResultSet resultSet) throws SQLException {
         this.setId(resultSet.getInt("id"));
         this.setTitle(resultSet.getString("title"));
 
@@ -84,6 +106,8 @@ public class SimpleDocument extends AbstractDocument {
             throw new SQLException("Invalid state");
         }
 
+        this.lastLog = new DocumentLogEntity().mapEntity(resultSet);
+
         return this;
     }
 
@@ -92,5 +116,14 @@ public class SimpleDocument extends AbstractDocument {
         synchronized (this) {
             new DocumentModel().save(this);
         }
+    }
+
+    public void cancelReservation(Abonne abonne) {
+        this.processLog(abonne, DocumentState.FREE);
+    }
+
+    @Override
+    public String toString() {
+        return this.numero() + " - " + this.getTitle() + " (" + this.state.toString() + ")";
     }
 }

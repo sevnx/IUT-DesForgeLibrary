@@ -1,32 +1,24 @@
-package application.server.domain;
+package application.server.domain.entities.types;
 
-import application.server.domain.core.Abonne;
-import application.server.domain.core.Entity;
-import application.server.domain.core.SimpleEntity;
+import application.server.domain.entities.interfaces.Abonne;
+import application.server.domain.entities.interfaces.Entity;
+import application.server.managers.TimerManager;
 import application.server.models.SubscriberModel;
+import application.server.timer.tasks.BanUserTask;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class SimpleAbonne extends SimpleEntity<SubscriberModel> implements Abonne {
+public class SimpleAbonneEntity extends SimpleEntity<SubscriberModel> implements Abonne {
     private int id;
     private String firstName;
     private String lastName;
     private LocalDate birthdate;
     private boolean banned;
 
-    public SimpleAbonne(int id, String firstName, String lastName, LocalDate birthdate) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthdate = birthdate;
-        this.banned = false;
-    }
-
-    public SimpleAbonne() {
-    }
+    public SimpleAbonneEntity() {}
 
     @Override
     public int getId() {
@@ -44,12 +36,19 @@ public class SimpleAbonne extends SimpleEntity<SubscriberModel> implements Abonn
         return this;
     }
 
+    public void banUser() throws SQLException {
+        banned = true;
+        this.save();
+        TimerManager.startTimer("TODO", new BanUserTask(this));
+    }
+
+public void unbanUser() {
+        banned = false;
+    }
 
     @Override
     public void save() throws SQLException {
-        synchronized (this) {
-            new SubscriberModel().save(this);
-        }
+        new SubscriberModel().save(this);
     }
 
     @Override

@@ -1,5 +1,6 @@
-package application.server.domain.core;
+package application.server.domain.entities.types;
 
+import application.server.domain.entities.interfaces.Entity;
 import application.server.models.Model;
 
 import java.sql.ResultSet;

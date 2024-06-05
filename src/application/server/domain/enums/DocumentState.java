@@ -1,11 +1,11 @@
-package application.server.domain;
+package application.server.domain.enums;
 
 import java.util.Optional;
 
 public enum DocumentState {
-    FREE(1, "FREE"),
-    RESERVED(2, "RESERVED"),
-    BORROWED(3, "BORROWED");
+    FREE(1, "DISPONIBLE"),
+    RESERVED(2, "RESERVE"),
+    BORROWED(3, "EMPRUNTE");
 
     private final int stateId;
     private final String name;

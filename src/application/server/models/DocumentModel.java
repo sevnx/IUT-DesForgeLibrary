@@ -1,15 +1,15 @@
 package application.server.models;
 
-import application.server.domain.SimpleDocument;
+import application.server.domain.entities.types.SimpleDocumentEntity;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DocumentModel extends Model<SimpleDocument> {
+public class DocumentModel extends Model<SimpleDocumentEntity> {
 
 
     @Override
-    public void save(SimpleDocument entity) throws SQLException {
+    public void save(SimpleDocumentEntity entity) throws SQLException {
         int id = entity.getId();
         int newState = entity.getState().getStateId();
 
@@ -26,7 +26,7 @@ public class DocumentModel extends Model<SimpleDocument> {
     }
 
     @Override
-    public SimpleDocument getEntityInstance() {
-        return new SimpleDocument();
+    public SimpleDocumentEntity getEntityInstance() {
+        return new SimpleDocumentEntity();
     }
 }

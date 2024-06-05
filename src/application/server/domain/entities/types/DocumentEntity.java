@@ -1,10 +1,10 @@
-package application.server.domain;
+package application.server.domain.entities.types;
 
-import application.server.domain.core.Document;
-import application.server.domain.core.SimpleEntity;
+import application.server.domain.entities.interfaces.Abonne;
+import application.server.domain.entities.interfaces.Document;
 import application.server.models.DocumentModel;
 
-public abstract class AbstractDocument extends SimpleEntity<DocumentModel> implements Document {
+public abstract class DocumentEntity extends SimpleEntity<DocumentModel> implements Document {
     private int id;
     private String title;
 
@@ -31,6 +31,4 @@ public abstract class AbstractDocument extends SimpleEntity<DocumentModel> imple
     public String getEntityName() {
         return "Document";
     }
-
-
 }

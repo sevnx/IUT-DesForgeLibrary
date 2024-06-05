@@ -1,13 +1,12 @@
 package application.server.models;
 
-import application.server.domain.core.Entity;
+import application.server.domain.entities.interfaces.Entity;
 import application.server.managers.DatabaseManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Optional;
 import java.util.Vector;
 
 /**
