@@ -1,28 +1,20 @@
-package client;
+package application.client;
 
-import java.util.List;
+import application.client.factory.ClientFactory;
+import application.client.manager.ClientManager;
 
-import static java.lang.Integer.parseInt;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 public class ClientStart {
-    private static final List<Integer> PORTS = List.of(3000, 4000, 5000);
-
     public static void main(String[] args) {
-        if (args.length == 0) {
-            System.err.println("Please provide a port number.");
-            return;
-        }
-
-        int port = parseInt(args[0]);
-        if(!PORTS.contains(port)) {
-            try {
-                new Thread(new ClientProtocol("localhost", port)).start();
-                System.out.println("Client started on port " + port + ". If you want to stop the client, please type 'exit'.");
-            } catch (Exception e) {
-                System.err.println("The server you are trying to connect to is not available.");
-            }
-        } else {
-            System.err.println("Port number is not valid.");
+        try {
+            ClientManager clientManager = ClientFactory.create(args);
+            ClientFactory.manage(clientManager);
+            ClientFactory.close(clientManager);
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | IOException |
+                 NoSuchMethodException e) {
+            throw new RuntimeException(e);
         }
     }
 }

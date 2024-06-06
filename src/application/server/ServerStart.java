@@ -1,17 +1,27 @@
-package server;
+package application.server;
 
-import librairies.server.Server;
-import server.services.ServiceReservation;
-import server.services.ServiceEmprunt;
-import server.services.ServiceRetour;
+import application.server.factories.DataFactory;
+import application.server.factories.DatabaseFactory;
+import application.server.factories.ServerFactory;
+import application.server.factories.TimerFactory;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.config.Configurator;
 
 import java.lang.reflect.InvocationTargetException;
-import java.io.IOException;
 
 public class ServerStart {
-    public static void main(String[] args) throws IllegalAccessException, InstantiationException, InvocationTargetException, IOException, NoSuchMethodException {
-        new Thread(new Server(ServiceReservation.class, 3000)).start();
-        new Thread(new Server(ServiceEmprunt.class, 4000)).start();
-        new Thread(new Server(ServiceRetour.class, 5000)).start();
+    public static void main(String[] args) {
+        try {
+            Configurator.setRootLevel(Level.INFO);
+
+            DatabaseFactory.setupDatabase();
+            ServerFactory.launch();
+            DataFactory.populateData();
+
+            TimerFactory.setupTimers();
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException |
+                 NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
