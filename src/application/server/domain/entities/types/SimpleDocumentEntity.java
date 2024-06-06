@@ -5,6 +5,7 @@ import application.server.domain.entities.interfaces.EmpruntException;
 import application.server.domain.entities.interfaces.ReservationException;
 import application.server.domain.entities.interfaces.RetourException;
 import application.server.domain.enums.DocumentState;
+import application.server.managers.DataManager;
 import application.server.managers.TimerManager;
 import application.server.models.DocumentModel;
 import application.server.timer.tasks.BorrowTask;
@@ -56,12 +57,9 @@ public final class SimpleDocumentEntity extends DocumentEntity {
         }
     }
 
-    public String getBorrowTimerTaskIdentifier(Abonne ab) {
-        return BorrowTask.class.getName() + "-" + ab.getId() + "-" + numero();
-    }
-
     public void processBorrow(Abonne ab) throws EmpruntException {
-        TimerManager.startTimer(getBorrowTimerTaskIdentifier(ab), new BorrowTask(ab));
+        BorrowTask task = new BorrowTask(ab);
+        TimerManager.startTimer(task.getTaskIdentifier(), task);
         processLog(ab, DocumentState.BORROWED);
     }
 
@@ -86,7 +84,8 @@ public final class SimpleDocumentEntity extends DocumentEntity {
                 processLog(null, DocumentState.FREE);
                 Abonne ab = this.lastLog.getSubscriber().orElseThrow(() -> new RetourException("No subscriber found"));
                 try {
-                    TimerManager.stopTimer(getBorrowTimerTaskIdentifier(ab));
+                    BorrowTask task = new BorrowTask(ab);
+                    TimerManager.stopTimer(task.getTaskIdentifier());
                 } catch (IllegalArgumentException e) {
                     throw new RetourException("Vous avez été banis");
                 }
@@ -106,7 +105,7 @@ public final class SimpleDocumentEntity extends DocumentEntity {
             throw new SQLException("Invalid state");
         }
 
-        this.lastLog = new DocumentLogEntity().mapEntity(resultSet);
+        this.lastLog = DataManager.getDocumentLog(resultSet.getInt("id")).orElse(null);
 
         return this;
     }

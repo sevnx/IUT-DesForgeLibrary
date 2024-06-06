@@ -4,23 +4,33 @@ import application.server.domain.entities.types.SimpleDocumentEntity;
 import application.server.domain.entities.interfaces.Abonne;
 import application.server.timer.interfaces.AbstractTimerTask;
 
+import java.util.Optional;
+
 public class ReservationTask extends AbstractTimerTask {
     private final Abonne simpleAbonne;
     private final SimpleDocumentEntity document;
+    private final Optional<Long> durationInSeconds;
 
-    public ReservationTask(Abonne simpleAbonne, SimpleDocumentEntity document) {
+    public ReservationTask(Abonne simpleAbonne, SimpleDocumentEntity document, Long durationInSeconds) {
         this.simpleAbonne = simpleAbonne;
         this.document = document;
+        this.durationInSeconds = Optional.ofNullable(durationInSeconds);
     }
 
-    @Override
-    public String getIdentifier() {
-        return "Reservation";
+    public ReservationTask(Abonne simpleAbonne, SimpleDocumentEntity document) {
+        this(simpleAbonne, document, null);
     }
 
     @Override
     public long getDurationInSeconds() {
-        return 60 * 60 * 2; // 2 hours
+        return durationInSeconds.orElse(getDefaultDurationInSeconds());
+    }
+
+    public static long getDefaultDurationInSeconds() {
+        long SECONDS = 60;
+        long MINUTES = 60;
+        long HOURS = 2;
+        return SECONDS * MINUTES * HOURS;
     }
 
     @Override
@@ -35,5 +45,9 @@ public class ReservationTask extends AbstractTimerTask {
     @Override
     public boolean isTimerCancelable() {
         return true;
+    }
+
+    public String getTaskIdentifier() {
+        return "ReservationTask" + "-" + simpleAbonne.getId() + "-" + document.getId();
     }
 }

@@ -8,8 +8,11 @@ import application.server.timer.tasks.BanUserTask;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.Optional;
 
 public class SimpleAbonneEntity extends SimpleEntity<SubscriberModel> implements Abonne {
     private int id;
@@ -17,6 +20,7 @@ public class SimpleAbonneEntity extends SimpleEntity<SubscriberModel> implements
     private String lastName;
     private LocalDate birthdate;
     private boolean banned;
+    private Optional<LocalDateTime> bannedUntil;
 
     public SimpleAbonneEntity() {}
 
@@ -33,6 +37,13 @@ public class SimpleAbonneEntity extends SimpleEntity<SubscriberModel> implements
         this.birthdate = resultSet.getDate("birthdate").toLocalDate();
         this.banned = resultSet.getBoolean("isBanned");
 
+        Timestamp bannedUntil = resultSet.getTimestamp("bannedUntil");
+        if (bannedUntil == null) {
+            this.bannedUntil = Optional.empty();
+        } else {
+            this.bannedUntil = Optional.of(bannedUntil.toLocalDateTime());
+        }
+
         return this;
     }
 
@@ -44,6 +55,11 @@ public class SimpleAbonneEntity extends SimpleEntity<SubscriberModel> implements
 
 public void unbanUser() {
         banned = false;
+    }
+
+    @Override
+    public Optional<LocalDateTime> bannedUntil() {
+        return bannedUntil;
     }
 
     @Override

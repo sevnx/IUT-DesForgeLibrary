@@ -22,6 +22,18 @@ CREATE TABLE deslibrary.Document
     CONSTRAINT FK_DocumentState FOREIGN KEY (idState) REFERENCES DocumentState (id)
 );
 
+CREATE TABLE deslibrary.DocumentLog
+(
+    idDocument   INT      NOT NULL,
+    idSubscriber INT,
+    idNewState   INT      NOT NULL,
+    date         TIMESTAMP NOT NULL,
+    CONSTRAINT PK_Command PRIMARY KEY (idDocument),
+    CONSTRAINT FK_Command_idSubscriber FOREIGN KEY (idSubscriber) REFERENCES Subscriber (id),
+    CONSTRAINT FK_Command_idDocument FOREIGN KEY (idDocument) REFERENCES Document (id),
+    CONSTRAINT FK_Command_idNewState FOREIGN KEY (idNewState) REFERENCES DocumentState (id)
+);
+
 CREATE TABLE deslibrary.Subscriber
 (
     id          INTEGER AUTO_INCREMENT,
@@ -29,22 +41,11 @@ CREATE TABLE deslibrary.Subscriber
     lastName    VARCHAR(100) NOT NULL,
     birthdate   DATE         NOT NULL,
     isBanned    BOOLEAN  DEFAULT FALSE,
-    bannedUntil DATETIME DEFAULT NULL,
+    bannedUntil TIMESTAMP DEFAULT NULL,
     CONSTRAINT PK_Subcriber PRIMARY KEY (id)
 );
 
-CREATE TABLE deslibrary.DocumentLog
-(
-    id           INTEGER AUTO_INCREMENT,
-    idDocument   INT      NOT NULL,
-    idSubscriber INT,
-    idNewState   INT      NOT NULL,
-    date         DATETIME NOT NULL,
-    CONSTRAINT PK_Command PRIMARY KEY (id),
-    CONSTRAINT FK_Command_idSubscriber FOREIGN KEY (idSubscriber) REFERENCES Subscriber (id),
-    CONSTRAINT FK_Command_idDocument FOREIGN KEY (idDocument) REFERENCES Document (id),
-    CONSTRAINT FK_Command_idNewState FOREIGN KEY (idNewState) REFERENCES DocumentState (id)
-);
+
 
 CREATE TABLE deslibrary.Dvd
 (

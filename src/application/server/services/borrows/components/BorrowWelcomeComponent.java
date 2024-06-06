@@ -18,12 +18,10 @@ public class BorrowWelcomeComponent implements Component {
           .append("Bienvenue au service d'emprunt de la médiathèque. Voici le catalogue des ouvrages disponibles :")
           .append(System.lineSeparator());
 
-        DataManager.getDocuments().forEach(document -> sb.append(document.numero())
-          .append(" - ")
-          .append(document)
+        DataManager.getDocuments().forEach(document -> sb.append(document)
           .append(System.lineSeparator()));
 
-        sb.append("") // TODO: call service to get catalog
+        sb // TODO: call service to get catalog
           .append(System.lineSeparator())
           .append("Pour emprunter un ouvrage, veuillez saisir votre numéro d'abonné :");
 

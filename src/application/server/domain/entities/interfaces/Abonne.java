@@ -1,5 +1,11 @@
 package application.server.domain.entities.interfaces;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+/**
+ * Subscriber interface
+ */
 public interface Abonne {
     int getId();
 
@@ -10,4 +16,6 @@ public interface Abonne {
     void banUser() throws Exception;
 
     void unbanUser() throws Exception;
+
+    Optional<LocalDateTime> bannedUntil();
 }

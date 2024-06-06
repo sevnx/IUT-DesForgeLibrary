@@ -15,13 +15,13 @@ import java.util.Optional;
 public class DocumentLogEntity extends SimpleEntity<DocumentLogModel> {
     private int id;
     private Abonne subscriber;
-    private Document document;
+    private SimpleDocumentEntity document;
     private DocumentState newState;
     private LocalDateTime time;
 
     public DocumentLogEntity() {}
 
-    public DocumentLogEntity(int id, Abonne subscriber, Document document, DocumentState newState, LocalDateTime time) {
+    public DocumentLogEntity(int id, Abonne subscriber, SimpleDocumentEntity document, DocumentState newState, LocalDateTime time) {
         this.id = id;
         this.subscriber = subscriber;
         this.document = document;
@@ -42,9 +42,9 @@ public class DocumentLogEntity extends SimpleEntity<DocumentLogModel> {
     public DocumentLogEntity mapEntity(ResultSet resultSet) throws SQLException {
         this.id = resultSet.getInt("id");
         this.subscriber = DataManager.getSubscriber(resultSet.getInt("idSubscriber")).orElse(null);
-        this.document = DataManager.getDocument(resultSet.getInt("idDocument")).orElseThrow();
+        this.document = DataManager.getBaseDocument(resultSet.getInt("idDocument")).orElseThrow();
         this.newState = DocumentState.valueOf(resultSet.getString("idNewState"));
-        this.time = resultSet.getTimestamp("time").toLocalDateTime();
+        this.time = resultSet.getTimestamp("date").toLocalDateTime();
         return this;
     }
 
@@ -68,7 +68,7 @@ public class DocumentLogEntity extends SimpleEntity<DocumentLogModel> {
         return Optional.ofNullable(subscriber);
     }
 
-    public Document getDocument() {
+    public SimpleDocumentEntity getDocument() {
         return document;
     }
 }

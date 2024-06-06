@@ -1,7 +1,7 @@
 package application.server.timer.interfaces;
 
 public interface TimerConfig {
-    String getIdentifier();
+    String getTaskIdentifier();
 
     long getDurationInSeconds();
 }

@@ -5,46 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e714522d-8041-4a1c-bbfa-aaae5856902e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/application/server/factories/TimerFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/application/server/managers/TimerManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/application/server/timer/interfaces/AbstractTimerTask.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/application/server/timer/interfaces/ControllableTimer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/application/server/timer/interfaces/TimerConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/application/server/timer/tasks/BanUserTask.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/application/server/timer/tasks/BorrowTask.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/application/server/timer/tasks/ReservationTask.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/client/factory/ClientFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/client/factory/ClientFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/server/ServerStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/ServerStart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/domain/AbstractDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/types/DocumentEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/domain/DocumentLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/types/DocumentLogEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/domain/DocumentState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/enums/DocumentState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/domain/Dvd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/types/DvdEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/domain/SimpleAbonne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/types/SimpleAbonneEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/domain/SimpleDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/types/SimpleDocumentEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/domain/core/Abonne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/Abonne.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/domain/core/Document.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/Document.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/domain/core/DocumentException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/DocumentException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/domain/core/EmpruntException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/EmpruntException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/domain/core/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/domain/core/ReservationException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/ReservationException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/domain/core/RetourException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/RetourException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/domain/core/SimpleEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/types/SimpleEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/factories/DataFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/factories/DataFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/managers/DataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/managers/DataManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/models/DocumentLogModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/models/DocumentLogModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/models/DocumentModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/models/DocumentModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/models/DvdModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/models/DvdModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/models/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/models/Model.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/models/SubscriberModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/models/SubscriberModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/scripts/create_database.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/scripts/create_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/scripts/create.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/scripts/drop_tables.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/scripts/insert_dvds.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/scripts/insert_types.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/scripts/insert_users.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/Abonne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/Abonne.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/domain/entities/types/DocumentLogEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/types/DocumentLogEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/domain/entities/types/SimpleAbonneEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/types/SimpleAbonneEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/domain/entities/types/SimpleDocumentEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/types/SimpleDocumentEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/factories/TimerFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/factories/TimerFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/scripts/create.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/scripts/create.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/server/services/borrows/components/BorrowWelcomeComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/services/borrows/components/BorrowWelcomeComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/services/returns/components/ReturnWelcomeComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/services/returns/components/ReturnWelcomeComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/timer/interfaces/AbstractTimerTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/timer/interfaces/AbstractTimerTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/timer/interfaces/TimerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/timer/interfaces/TimerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/timer/tasks/BanUserTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/timer/tasks/BanUserTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/timer/tasks/BorrowTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/timer/tasks/BorrowTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/timer/tasks/ReservationTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/timer/tasks/ReservationTask.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,32 +64,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ClientStart.executor&quot;: &quot;Run&quot;,
-    &quot;Application.ServerStart.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;user__sev&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/SeV/Desktop/brette_soft/src/librairies/jdbc/ojdbc6.jar&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.18261719&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ClientStart.executor": "Run",
+    "Application.ServerStart.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "true",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "user__sev",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/SeV/Desktop/brette_soft/src/librairies/jdbc/ojdbc6.jar",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.18261719",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "show.migrate.to.gradle.popup": "false",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Application.ClientStart">
     <configuration name="ClientStart" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="application.client.ClientStart" />
@@ -167,6 +149,8 @@
       <workItem from="1717443580149" duration="3349000" />
       <workItem from="1717526844914" duration="1144000" />
       <workItem from="1717589435445" duration="10378000" />
+      <workItem from="1717655674858" duration="2816000" />
+      <workItem from="1717659519585" duration="740000" />
     </task>
     <servers />
   </component>
