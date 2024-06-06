@@ -2,6 +2,8 @@ package application.server.models;
 
 import application.server.domain.entities.interfaces.Entity;
 import application.server.managers.DatabaseManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,6 +18,8 @@ import java.util.Vector;
  * @param <T> Mapped entity
  */
 public abstract class Model<T extends Entity<?>> {
+    private static final Logger LOGGER = LogManager.getLogger("Database Model");
+
     private final Connection connection;
 
     public Model() {
@@ -37,6 +41,7 @@ public abstract class Model<T extends Entity<?>> {
     public abstract T getEntityInstance();
 
     public Vector<T> get() throws SQLException {
+        LOGGER.info("Fetching entries from database for " + this.getClass().getSimpleName());
         try {
             ResultSet resultSet = entries();
             Vector<T> entities = new Vector<>();
@@ -85,6 +90,7 @@ public abstract class Model<T extends Entity<?>> {
     }
 
     public PreparedStatement prepareStatement(String query) throws SQLException {
+        LOGGER.info("Preparing statement : " + query);
         return connection.prepareStatement(query);
     }
 }

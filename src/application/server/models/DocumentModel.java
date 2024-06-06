@@ -13,7 +13,7 @@ public class DocumentModel extends Model<SimpleDocumentEntity> {
         int id = entity.getId();
         int newState = entity.getState().getStateId();
 
-        PreparedStatement preparedStatement = super.prepareStatement("UPDATE" + getFullTableName() + "SET state = ? WHERE id = ?");
+        PreparedStatement preparedStatement = super.prepareStatement("UPDATE " + getFullTableName() + " SET idState = ? WHERE id = ?");
         preparedStatement.setInt(1, newState);
         preparedStatement.setInt(2, id);
 

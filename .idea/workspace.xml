@@ -5,22 +5,44 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e714522d-8041-4a1c-bbfa-aaae5856902e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/35edf4f2-29d5-44a2-aa72-88ce58fcbfbf.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/35edf4f2-29d5-44a2-aa72-88ce58fcbfbf.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/log4j.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/client/factory/ClientFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/client/factory/ClientFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/server/ServerStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/ServerStart.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/Abonne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/Abonne.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/DocumentException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/EmpruntException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/EmpruntException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/ReservationException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/ReservationException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/RetourException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/RetourException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/server/domain/entities/types/DocumentLogEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/types/DocumentLogEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/domain/entities/types/DvdEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/types/DvdEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/server/domain/entities/types/SimpleAbonneEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/types/SimpleAbonneEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/server/domain/entities/types/SimpleDocumentEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/types/SimpleDocumentEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/factories/DataFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/factories/DataFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/factories/DatabaseFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/factories/DatabaseFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/server/factories/TimerFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/factories/TimerFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/managers/DataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/managers/DataManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/managers/TimerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/managers/TimerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/models/DocumentLogModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/models/DocumentLogModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/models/DocumentModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/models/DocumentModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/models/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/models/Model.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/models/SubscriberModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/models/SubscriberModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/server/scripts/create.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/scripts/create.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/services/borrows/components/BorrowWelcomeComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/services/borrows/components/BorrowWelcomeComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/timer/interfaces/AbstractTimerTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/timer/interfaces/AbstractTimerTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/timer/interfaces/TimerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/timer/interfaces/TimerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/timer/tasks/BanUserTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/timer/tasks/BanUserTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/timer/tasks/BorrowTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/timer/tasks/BorrowTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/timer/tasks/ReservationTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/timer/tasks/ReservationTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/services/ServiceUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/services/ServiceUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/services/borrows/BorrowService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/services/borrows/BorrowService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/services/borrows/components/BorrowDocumentComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/services/borrows/BorrowDocumentComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/services/borrows/components/BorrowWelcomeComponent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/services/reservations/ReservationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/services/reservations/ReservationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/services/reservations/components/ReservationDocumentComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/services/reservations/ReservationDocumentComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/services/reservations/components/ReservationWelcomeComponent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/services/returns/ReturnService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/services/returns/ReturnService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/services/returns/components/ReturnDocumentComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/services/returns/ReturnDocumentComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/services/returns/components/ReturnWelcomeComponent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/timer/interfaces/ControllableTimer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/timer/interfaces/ControllableTimer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/librairies/server/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/librairies/server/Service.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,12 +65,13 @@
     &quot;assignee&quot;: &quot;sevnx&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/sevnx/brette_soft.git&quot;,
-    &quot;accountId&quot;: &quot;2c1ae86f-2162-43e8-9a8d-d878984770dc&quot;
-  }
-}</component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/sevnx/brette_soft.git",
+    "accountId": "2c1ae86f-2162-43e8-9a8d-d878984770dc"
+  },
+  "editorReviewEnabled": false
+}]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$USER_HOME$/.jdks/openjdk-19.0.1/lib/src.zip!/java.base/java/lang/IllegalStateException.java" root0="SKIP_INSPECTION" />
   </component>
@@ -66,7 +89,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.BorrowService.executor": "Run",
     "Application.ClientStart.executor": "Run",
+    "Application.ReservationService.executor": "Run",
+    "Application.ReturnService.executor": "Run",
     "Application.ServerStart.executor": "Run",
     "Downloaded.Files.Path.Enabled": "true",
     "Repository.Attach.Annotations": "false",
@@ -75,7 +101,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "user__sev",
+    "git-widget-placeholder": "#1 on user__sev",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/SeV/Desktop/brette_soft/src/librairies/jdbc/ojdbc6.jar",
     "node.js.detected.package.eslint": "true",
@@ -96,10 +122,44 @@
     ]
   }
 }]]></component>
-  <component name="RunManager" selected="Application.ClientStart">
-    <configuration name="ClientStart" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\SeV\Desktop\brette_soft" />
+      <recent name="$PROJECT_DIR$/config" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.ServerStart">
+    <configuration name="BorrowService" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="application.client.ClientStart" />
       <module name="brette_soft" />
+      <option name="PROGRAM_PARAMETERS" value="4000" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="application.client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ReservationService" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="application.client.ClientStart" />
+      <module name="brette_soft" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="application.client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ReturnService" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="application.client.ClientStart" />
+      <module name="brette_soft" />
+      <option name="PROGRAM_PARAMETERS" value="5000" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="application.client.*" />
@@ -123,18 +183,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.BorrowService" />
+      <item itemvalue="Application.ReservationService" />
+      <item itemvalue="Application.ReturnService" />
+      <item itemvalue="Application.ServerStart" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ClientStart" />
         <item itemvalue="Application.ServerStart" />
+        <item itemvalue="Application.ReservationService" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.17011.79" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.17011.79" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
       </set>
     </attachedChunks>
   </component>
@@ -151,6 +217,11 @@
       <workItem from="1717589435445" duration="10378000" />
       <workItem from="1717655674858" duration="2816000" />
       <workItem from="1717659519585" duration="740000" />
+      <workItem from="1717660328118" duration="3749000" />
+      <workItem from="1717673548468" duration="2094000" />
+      <workItem from="1717676632567" duration="4024000" />
+      <workItem from="1717681222836" duration="51000" />
+      <workItem from="1717698618734" duration="11796000" />
     </task>
     <servers />
   </component>
@@ -162,7 +233,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/application/server/ServerStart.java</url>
-          <line>12</line>
+          <line>16</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>

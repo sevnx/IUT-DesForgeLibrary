@@ -1,7 +1,7 @@
 package application.server.domain.entities.interfaces;
 
-public class EmpruntException extends DocumentException {
+public class EmpruntException extends RuntimeException {
     public EmpruntException(String message) {
-        super(message);
+        super("EMPRUNT IMPOSSIBLE: " + message);
     }
 }

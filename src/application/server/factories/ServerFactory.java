@@ -21,14 +21,14 @@ public class ServerFactory {
         serverList.add(ReservationServer.class);
         serverList.add(ReturnServer.class);
 
-        for(Class<? extends Server> serverClass: serverList) {
+        for (Class<? extends Server> serverClass : serverList) {
             Server server = ServerManager.start(serverClass);
             launchedServers.add(server);
         }
     }
 
     public static void close() throws IOException {
-        for(Server server: launchedServers) {
+        for (Server server : launchedServers) {
             ServerManager.stop(server);
         }
     }

@@ -12,7 +12,8 @@ public class ClientStart {
             ClientManager clientManager = ClientFactory.create(args);
             ClientFactory.manage(clientManager);
             ClientFactory.close(clientManager);
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | IOException | NoSuchMethodException e) {
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | IOException |
+                 NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
     }

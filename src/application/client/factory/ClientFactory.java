@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 public class ClientFactory {
-    private static final int DEFAULT_CLIENT_PORT = 4000;
+    private static final int DEFAULT_CLIENT_PORT = 3000;
     private static final String DEFAULT_CLIENT_HOST = "localhost";
 
     /**
@@ -32,7 +32,6 @@ public class ClientFactory {
      * Manages client communication
      *
      * @param clientManager the ClientManager instance to manage
-     * @throws IOException
      */
     public static void manage(ClientManager clientManager) throws IOException {
         boolean sendMessage = false;
@@ -42,7 +41,10 @@ public class ClientFactory {
             sendMessage = false;
             String response = clientManager.read();
 
-            if ("exit".equals(response)) break;
+            if (response.endsWith("[EXIT]")) {
+                System.out.println(response.replace("[EXIT]", "").trim());
+                break;
+            }
 
             if (response.endsWith("[SEND]")) {
                 response = response.replace("[SEND]", "").trim();
@@ -56,7 +58,6 @@ public class ClientFactory {
      * Closes the ClientManager instance
      *
      * @param clientManager the ClientManager instance to close
-     * @throws IOException
      */
     public static void close(ClientManager clientManager) throws IOException {
         clientManager.close();

@@ -10,7 +10,8 @@ public class DvdModel extends Model<DvdEntity> {
      * @param entity The entity to save
      */
     @Override
-    public void save(DvdEntity entity) {}
+    public void save(DvdEntity entity) {
+    }
 
     @Override
     public String getTableName() {

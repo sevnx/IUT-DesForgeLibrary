@@ -1,9 +1,10 @@
-CREATE DATABASE IF NOT EXISTS deslibrary;
+CREATE
+DATABASE IF NOT EXISTS deslibrary;
 
 DROP TABLE IF EXISTS deslibrary.DocumentState;
 DROP TABLE IF EXISTS deslibrary.Document;
 DROP TABLE IF EXISTS deslibrary.Subscriber;
-DROP TABLE IF EXISTS deslibrary.DocumentLog;
+DROP TABLE IF EXISTS deslibrary.DocumentChangeLog;
 DROP TABLE IF EXISTS deslibrary.Dvd;
 
 CREATE TABLE deslibrary.DocumentState
@@ -22,16 +23,14 @@ CREATE TABLE deslibrary.Document
     CONSTRAINT FK_DocumentState FOREIGN KEY (idState) REFERENCES DocumentState (id)
 );
 
-CREATE TABLE deslibrary.DocumentLog
+CREATE TABLE deslibrary.DocumentChangeLog
 (
-    idDocument   INT      NOT NULL,
+    id           INT       NOT NULL,
     idSubscriber INT,
-    idNewState   INT      NOT NULL,
-    date         TIMESTAMP NOT NULL,
-    CONSTRAINT PK_Command PRIMARY KEY (idDocument),
+    time         TIMESTAMP NOT NULL,
+    CONSTRAINT PK_Command PRIMARY KEY (id),
     CONSTRAINT FK_Command_idSubscriber FOREIGN KEY (idSubscriber) REFERENCES Subscriber (id),
-    CONSTRAINT FK_Command_idDocument FOREIGN KEY (idDocument) REFERENCES Document (id),
-    CONSTRAINT FK_Command_idNewState FOREIGN KEY (idNewState) REFERENCES DocumentState (id)
+    CONSTRAINT FK_Command_idDocument FOREIGN KEY (id) REFERENCES Document (id)
 );
 
 CREATE TABLE deslibrary.Subscriber
@@ -40,7 +39,7 @@ CREATE TABLE deslibrary.Subscriber
     firstName   VARCHAR(50)  NOT NULL,
     lastName    VARCHAR(100) NOT NULL,
     birthdate   DATE         NOT NULL,
-    isBanned    BOOLEAN  DEFAULT FALSE,
+    isBanned    BOOLEAN   DEFAULT FALSE,
     bannedUntil TIMESTAMP DEFAULT NULL,
     CONSTRAINT PK_Subcriber PRIMARY KEY (id)
 );
@@ -66,11 +65,13 @@ VALUES (3, 'BORROWED');
 
 INSERT INTO deslibrary.Document (id, title)
 VALUES (1, "Psychose");
+
 INSERT INTO deslibrary.Dvd (id, isForAdult)
 VALUES (1, true);
 
 INSERT INTO deslibrary.Document (id, title)
 VALUES (2, "Cars");
+
 INSERT INTO deslibrary.Dvd (id, isForAdult)
 VALUES (2, true);
 
@@ -78,11 +79,13 @@ VALUES (2, true);
 
 INSERT INTO deslibrary.Document (id, title)
 VALUES (3, "Wall-E");
+
 INSERT INTO deslibrary.Dvd (id, isForAdult)
 VALUES (3, false);
 
 INSERT INTO deslibrary.Document (id, title)
 VALUES (4, "L'âge de Glace");
+
 INSERT INTO deslibrary.Dvd (id, isForAdult)
 VALUES (4, false);
 

@@ -2,12 +2,16 @@ package application.server.models;
 
 
 import application.server.domain.entities.types.DocumentLogEntity;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class DocumentLogModel extends Model<DocumentLogEntity> {
+    private static final Logger LOGGER = LogManager.getLogger("Document Log Model");
+
     @Override
     public void save(DocumentLogEntity entity) throws SQLException {
         if (exists(entity)) {
@@ -18,22 +22,24 @@ public class DocumentLogModel extends Model<DocumentLogEntity> {
     }
 
     private void runInsert(DocumentLogEntity entity) throws SQLException {
-        PreparedStatement preparedStatement = super.prepareStatement("INSERT INTO " + getFullTableName() + " (idDocument, idSubscriber, idNewState, date) VALUES (?, ?, ?, ?)");
+        LOGGER.info("Inserting new document log " + entity.getId());
+        PreparedStatement preparedStatement = super.prepareStatement("INSERT INTO " + getFullTableName() + " (id, idSubscriber, time) VALUES (?, ?, ?)");
 
         preparedStatement.setInt(1, entity.getDocument().numero());
+
         if (entity.getSubscriber().isPresent()) {
             preparedStatement.setInt(2, entity.getSubscriber().get().getId());
         } else {
             preparedStatement.setNull(2, java.sql.Types.INTEGER);
         }
-        preparedStatement.setInt(3, entity.getNewState().getStateId());
-        preparedStatement.setTimestamp(4, Timestamp.valueOf(entity.getTime()));
+        preparedStatement.setTimestamp(3, Timestamp.valueOf(entity.getTime()));
 
         preparedStatement.executeUpdate();
     }
 
     private void runUpdate(DocumentLogEntity entity) throws SQLException {
-        PreparedStatement preparedStatement = super.prepareStatement("UPDATE " + getFullTableName() + " SET idSubscriber = ?, idNewState = ?, date = ? WHERE id = ?");
+        LOGGER.info("Updating document log + " + entity.getId());
+        PreparedStatement preparedStatement = super.prepareStatement("UPDATE " + getFullTableName() + " SET idSubscriber = ?, time = ? WHERE id = ?");
 
         if (entity.getSubscriber().isPresent()) {
             preparedStatement.setInt(1, entity.getSubscriber().get().getId());
@@ -41,22 +47,27 @@ public class DocumentLogModel extends Model<DocumentLogEntity> {
             preparedStatement.setNull(1, java.sql.Types.INTEGER);
         }
 
-        preparedStatement.setInt(2, entity.getNewState().getStateId());
-        preparedStatement.setTimestamp(3, Timestamp.valueOf(entity.getTime()));
-        preparedStatement.setInt(4, entity.getId());
+        preparedStatement.setTimestamp(2, Timestamp.valueOf(entity.getTime()));
+        preparedStatement.setInt(3, entity.getId());
 
         preparedStatement.executeUpdate();
     }
 
     private boolean exists(DocumentLogEntity entity) throws SQLException {
-        PreparedStatement preparedStatement = super.prepareStatement("SELECT * FROM " + getFullTableName() + " WHERE idDocument = ?)");
+        PreparedStatement preparedStatement = super.prepareStatement("SELECT * FROM " + getFullTableName() + " WHERE id = ?");
         preparedStatement.setInt(1, entity.getId());
-        return preparedStatement.executeQuery().next();
+        try {
+            LOGGER.info(preparedStatement.toString());
+            return preparedStatement.executeQuery().next();
+        } catch (SQLException e) {
+            LOGGER.error("Error while checking if document log exists", e);
+            throw new SQLException("Error while checking if document log exists", e);
+        }
     }
 
     @Override
     public String getTableName() {
-        return "DocumentLog";
+        return "DocumentChangeLog";
     }
 
     @Override

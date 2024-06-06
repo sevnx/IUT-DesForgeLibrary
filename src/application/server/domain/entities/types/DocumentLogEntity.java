@@ -1,56 +1,45 @@
 package application.server.domain.entities.types;
 
 import application.server.domain.entities.interfaces.Abonne;
-import application.server.domain.entities.interfaces.Document;
-import application.server.domain.enums.DocumentState;
 import application.server.managers.DataManager;
 import application.server.models.DocumentLogModel;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Optional;
 
 public class DocumentLogEntity extends SimpleEntity<DocumentLogModel> {
-    private int id;
     private Abonne subscriber;
     private SimpleDocumentEntity document;
-    private DocumentState newState;
     private LocalDateTime time;
 
-    public DocumentLogEntity() {}
+    public DocumentLogEntity() {
+    }
 
-    public DocumentLogEntity(int id, Abonne subscriber, SimpleDocumentEntity document, DocumentState newState, LocalDateTime time) {
-        this.id = id;
+    public DocumentLogEntity(Abonne subscriber, SimpleDocumentEntity document, LocalDateTime time) {
         this.subscriber = subscriber;
         this.document = document;
-        this.newState = newState;
         this.time = time;
     }
 
     @Override
     public int getId() {
-        return id;
-    }
-
-    public DocumentState getNewState() {
-        return newState;
+        return document.numero();
     }
 
     @Override
     public DocumentLogEntity mapEntity(ResultSet resultSet) throws SQLException {
-        this.id = resultSet.getInt("id");
+        this.document = DataManager.getBaseDocument(resultSet.getInt("id")).orElseThrow();
         this.subscriber = DataManager.getSubscriber(resultSet.getInt("idSubscriber")).orElse(null);
-        this.document = DataManager.getBaseDocument(resultSet.getInt("idDocument")).orElseThrow();
-        this.newState = DocumentState.valueOf(resultSet.getString("idNewState"));
-        this.time = resultSet.getTimestamp("date").toLocalDateTime();
+        this.time = resultSet.getTimestamp("time").toLocalDateTime();
+        this.document.setLastLog(this);
         return this;
     }
 
     @Override
     public String getEntityName() {
-        return "DocumentLog";
+        return "DocumentChangeLog";
     }
 
     @Override

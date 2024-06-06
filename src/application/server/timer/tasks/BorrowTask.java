@@ -21,18 +21,18 @@ public class BorrowTask extends AbstractTimerTask {
         this(simpleAbonne, null);
     }
 
-    @Override
-    public long getDurationInSeconds() {
-        return durationInSeconds.orElse(getDefaultDuration());
-    }
-
-    public static long getDefaultDuration() {
+    public static long getDefaultDurationInSeconds() {
         final int SECONDS = 60;
         final int MINUTES = 60;
         final int HOURS = 24;
         final int DAYS = 30;
         final int MAX_LATE_DAYS = 14;
         return SECONDS * MINUTES * HOURS * (DAYS + MAX_LATE_DAYS);
+    }
+
+    @Override
+    public long getDurationInSeconds() {
+        return durationInSeconds.orElse(getDefaultDurationInSeconds());
     }
 
     @Override

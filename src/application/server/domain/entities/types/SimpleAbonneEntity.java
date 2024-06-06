@@ -22,7 +22,8 @@ public class SimpleAbonneEntity extends SimpleEntity<SubscriberModel> implements
     private boolean banned;
     private Optional<LocalDateTime> bannedUntil;
 
-    public SimpleAbonneEntity() {}
+    public SimpleAbonneEntity() {
+    }
 
     @Override
     public int getId() {
@@ -53,7 +54,7 @@ public class SimpleAbonneEntity extends SimpleEntity<SubscriberModel> implements
         TimerManager.startTimer("TODO", new BanUserTask(this));
     }
 
-public void unbanUser() {
+    public void unbanUser() {
         banned = false;
     }
 
@@ -72,13 +73,14 @@ public void unbanUser() {
         return "Abonne";
     }
 
-    public String getName() {
-        return firstName + " " + lastName;
-    }
-
     @Override
     public int getAge() {
         return Period.between(birthdate, LocalDate.now()).getYears();
+    }
+
+    @Override
+    public String getNom() {
+        return firstName + " " + lastName;
     }
 
     @Override

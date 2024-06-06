@@ -15,7 +15,7 @@ public class SubscriberModel extends Model<SimpleAbonneEntity> {
         int id = entity.getId();
         boolean banned = entity.isBanned();
 
-        PreparedStatement preparedStatement = super.prepareStatement("UPDATE" + getFullTableName() + "SET isBanned = ? WHERE id = ?");
+        PreparedStatement preparedStatement = super.prepareStatement("UPDATE " + getFullTableName() + " SET isBanned = ? WHERE id = ?");
         preparedStatement.setBoolean(1, banned);
         preparedStatement.setInt(2, id);
 

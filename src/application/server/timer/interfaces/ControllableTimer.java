@@ -6,6 +6,7 @@ import java.util.Timer;
  * A timer that can be controlled
  * It is useful to choose whether the timer can be cancelled or not
  * (e.g. a ban timer should not be cancellable)
+ *
  * @see Timer
  */
 public class ControllableTimer {
@@ -20,7 +21,8 @@ public class ControllableTimer {
     public void cancel() {
         if (cancellable) {
             timer.cancel();
+        } else {
+            throw new IllegalStateException("Timer is not cancellable");
         }
-        throw new IllegalStateException("Timer is not cancellable");
     }
 }

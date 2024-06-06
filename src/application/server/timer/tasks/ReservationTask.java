@@ -1,7 +1,7 @@
 package application.server.timer.tasks;
 
-import application.server.domain.entities.types.SimpleDocumentEntity;
 import application.server.domain.entities.interfaces.Abonne;
+import application.server.domain.entities.types.SimpleDocumentEntity;
 import application.server.timer.interfaces.AbstractTimerTask;
 
 import java.util.Optional;
@@ -21,16 +21,16 @@ public class ReservationTask extends AbstractTimerTask {
         this(simpleAbonne, document, null);
     }
 
-    @Override
-    public long getDurationInSeconds() {
-        return durationInSeconds.orElse(getDefaultDurationInSeconds());
-    }
-
     public static long getDefaultDurationInSeconds() {
         long SECONDS = 60;
         long MINUTES = 60;
         long HOURS = 2;
         return SECONDS * MINUTES * HOURS;
+    }
+
+    @Override
+    public long getDurationInSeconds() {
+        return durationInSeconds.orElse(getDefaultDurationInSeconds());
     }
 
     @Override

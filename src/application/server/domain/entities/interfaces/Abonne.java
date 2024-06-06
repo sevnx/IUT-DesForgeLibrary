@@ -11,6 +11,8 @@ public interface Abonne {
 
     int getAge();
 
+    String getNom();
+
     boolean isBanned();
 
     void banUser() throws Exception;

@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DvdEntity extends DocumentEntity {
+    private static final String NOT_OLD_ENOUGH_MESSAGE = "Vous n'avez pas l'âge requis pour réserver ce document";
     private static final int ADULT_AGE = 16;
     private SimpleDocumentEntity document;
     private boolean adult;
@@ -17,7 +18,7 @@ public class DvdEntity extends DocumentEntity {
     @Override
     public void reservation(Abonne ab) throws ReservationException {
         if (this.adult && ab.getAge() < ADULT_AGE) {
-            throw new ReservationException("Subscriber is not old enough to borrow this document");
+            throw new ReservationException(NOT_OLD_ENOUGH_MESSAGE);
         }
         document.reservation(ab);
     }
@@ -25,8 +26,9 @@ public class DvdEntity extends DocumentEntity {
     @Override
     public void emprunt(Abonne ab) throws EmpruntException {
         if (this.adult && ab.getAge() < ADULT_AGE) {
-            throw new EmpruntException("Subscriber is not old enough to borrow this document");
+            throw new EmpruntException(NOT_OLD_ENOUGH_MESSAGE);
         }
+        document.emprunt(ab);
     }
 
     @Override
@@ -38,7 +40,7 @@ public class DvdEntity extends DocumentEntity {
     public Entity<DocumentModel> mapEntity(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         this.setId(id);
-        this.document = DataManager.getBaseDocument(id).orElseThrow();
+        this.document = DataManager.getBaseDocument(id).orElse(null);
         this.adult = resultSet.getBoolean("isForAdult");
 
         return this;

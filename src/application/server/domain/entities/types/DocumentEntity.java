@@ -1,6 +1,5 @@
 package application.server.domain.entities.types;
 
-import application.server.domain.entities.interfaces.Abonne;
 import application.server.domain.entities.interfaces.Document;
 import application.server.models.DocumentModel;
 

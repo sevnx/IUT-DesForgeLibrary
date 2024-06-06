@@ -5,51 +5,83 @@ import application.server.domain.entities.interfaces.EmpruntException;
 import application.server.domain.entities.interfaces.ReservationException;
 import application.server.domain.entities.interfaces.RetourException;
 import application.server.domain.enums.DocumentState;
-import application.server.managers.DataManager;
 import application.server.managers.TimerManager;
 import application.server.models.DocumentModel;
 import application.server.timer.tasks.BorrowTask;
 import application.server.timer.tasks.ReservationTask;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Calendar;
+import java.util.Objects;
 import java.util.Optional;
 
 public final class SimpleDocumentEntity extends DocumentEntity {
+    private static final Logger LOGGER = LogManager.getLogger("Base Document Entity");
+    private final Object stateLock = new Object();
     private DocumentState state;
-    private DocumentLogEntity lastLog;
+    private Optional<DocumentLogEntity> lastLog;
 
     public DocumentState getState() {
-        synchronized (this) {
+        synchronized (stateLock) {
             return state;
         }
     }
 
+    /**
+     * Set the state of the document
+     * This is needed as when we load the document from the database,
+     * we can't immediately get the last log as it is not loaded yet
+     *
+     * @param lastLog the last log of the document
+     */
+    public void setLastLog(DocumentLogEntity lastLog) {
+        this.lastLog = Optional.of(lastLog);
+    }
+
     @Override
     public void reservation(Abonne ab) throws ReservationException {
+        LOGGER.info("Trying to reserve document {} with state {} by subscriber {}", this.numero(), getState(), ab.getId());
         switch (getState()) {
-            case BORROWED -> throw new ReservationException("Document is already borrowed");
-            case RESERVED -> throw new ReservationException("Document is already reserved");
+            case BORROWED -> throw new ReservationException("Ce document est déjà emprunté");
+            case RESERVED -> {
+                synchronized (stateLock) {
+                    if (!Objects.equals(this.lastLog.orElseThrow().getSubscriber().orElse(null), ab)) {
+                        throw new ReservationException("Ce document est déjà réservé par un autre abonné");
+                    } else {
+                        throw new ReservationException("Vous avez déjà réservé ce document");
+                    }
+                }
+            }
             case FREE -> {
-                TimerManager.startTimer("TODO",new ReservationTask(ab, this));
-                processLog(ab, DocumentState.RESERVED);
+                synchronized (stateLock) {
+                    TimerManager.startTimer("TODO", new ReservationTask(ab, this));
+                    processLog(ab, DocumentState.RESERVED);
+                }
             }
         }
     }
 
     @Override
     public void emprunt(Abonne ab) throws EmpruntException {
+        LOGGER.info("Trying to borrow document {} with state {} by subscriber {}", this.numero(), getState(), ab.getId());
         switch (getState()) {
             case BORROWED -> throw new EmpruntException("Document is already borrowed");
             case RESERVED -> {
-                synchronized (this) {
-                    Optional<Abonne> subscriber = this.lastLog.getSubscriber();
-                    if (subscriber.isEmpty() || !subscriber.get().equals(ab)) {
+                synchronized (stateLock) {
+                    Optional<Abonne> subscriber = this.lastLog
+                            .orElseThrow(() -> new RuntimeException("Dernier log introuvable"))
+                            .getSubscriber();
+                    if (subscriber.isEmpty()) {
+                        throw new RuntimeException("L'abonné n'a pas été trouvé");
+                    }
+                    if (!subscriber.get().equals(ab)) {
                         throw new EmpruntException("Document is reserved by another subscriber");
                     }
-                    TimerManager.stopTimer("TODO");
+                    ReservationTask task = new ReservationTask(ab, this);
+                    TimerManager.stopTimer(task.getTaskIdentifier());
                     processBorrow(ab);
                 }
             }
@@ -65,10 +97,12 @@ public final class SimpleDocumentEntity extends DocumentEntity {
 
     public void processLog(Abonne ab, DocumentState newState) {
         try {
-            synchronized (this) {
+            synchronized (stateLock) {
                 this.state = newState;
-                this.lastLog = new DocumentLogEntity(getId(), ab, this, newState, LocalDateTime.now());
-                this.lastLog.save();
+                this.save();
+                DocumentLogEntity newLog = new DocumentLogEntity(ab, this, LocalDateTime.now());
+                newLog.save();
+                this.lastLog = Optional.of(newLog);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error while saving document log :", e);
@@ -77,12 +111,16 @@ public final class SimpleDocumentEntity extends DocumentEntity {
 
     @Override
     public void retour() throws RetourException {
+        LOGGER.info("Trying to return document {} with state {}", this.numero(), getState());
         switch (getState()) {
             case FREE -> throw new RetourException("Document is already free");
             case RESERVED -> throw new RetourException("Document is reserved");
             case BORROWED -> {
+                Abonne ab = this.lastLog
+                        .orElseThrow(() -> new RuntimeException("Dernier log introuvable"))
+                        .getSubscriber()
+                        .orElseThrow(() -> new RetourException("Abonné introuvable"));
                 processLog(null, DocumentState.FREE);
-                Abonne ab = this.lastLog.getSubscriber().orElseThrow(() -> new RetourException("No subscriber found"));
                 try {
                     BorrowTask task = new BorrowTask(ab);
                     TimerManager.stopTimer(task.getTaskIdentifier());
@@ -97,22 +135,15 @@ public final class SimpleDocumentEntity extends DocumentEntity {
     public SimpleDocumentEntity mapEntity(ResultSet resultSet) throws SQLException {
         this.setId(resultSet.getInt("id"));
         this.setTitle(resultSet.getString("title"));
-
-        Optional<DocumentState> state = DocumentState.fromInt(resultSet.getInt("idState"));
-        if (state.isPresent()) {
-            this.state = state.get();
-        } else {
-            throw new SQLException("Invalid state");
-        }
-
-        this.lastLog = DataManager.getDocumentLog(resultSet.getInt("id")).orElse(null);
+        this.state = DocumentState.fromInt(resultSet.getInt("idState")).orElseThrow();
+        this.lastLog = Optional.empty();
 
         return this;
     }
 
     @Override
     public void save() throws SQLException {
-        synchronized (this) {
+        synchronized (stateLock) {
             new DocumentModel().save(this);
         }
     }

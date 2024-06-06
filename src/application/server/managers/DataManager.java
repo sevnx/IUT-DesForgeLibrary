@@ -5,7 +5,9 @@ import application.server.domain.entities.interfaces.Document;
 import application.server.domain.entities.types.DocumentLogEntity;
 import application.server.domain.entities.types.SimpleDocumentEntity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DataManager {
@@ -53,10 +55,6 @@ public class DataManager {
 
     public static List<Abonne> getSubscribers() {
         return new ArrayList<>(subscribers.values());
-    }
-
-    public static List<SimpleDocumentEntity> getBaseDocuments() {
-        return new ArrayList<>(baseDocuments.values());
     }
 
     public static List<DocumentLogEntity> getDocumentLogs() {

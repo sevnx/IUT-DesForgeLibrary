@@ -6,25 +6,25 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.List;
 
 public abstract class Service extends SocketProtocolLink {
     private boolean needToWait = true;
+    private Class<? extends Component> component;
     private volatile boolean isRunning = false;
 
-    public Service(Socket socket, Class<? extends Protocol> protocol) throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
+    public Service(Socket socket, Class<? extends Component> component, Class<? extends Protocol> protocol) throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
         super(socket, protocol);
+        this.component = component;
     }
 
-    public Service(Socket socket) throws IOException {
+    public Service(Socket socket, Class<? extends Component> component) throws IOException {
         super(socket);
+        this.component = component;
     }
 
     public void stopWaiting() {
         needToWait = false;
     }
-
-    protected abstract List<Class<? extends Component>> componentList();
 
     @Override
     public void run() {
@@ -32,25 +32,15 @@ public abstract class Service extends SocketProtocolLink {
         try {
             while (isRunning) {
                 this.protocol.setupCommunication();
-                for(Class<? extends Component> component : componentList()) {
-                    component.getConstructor().newInstance().call(this);
-                }
-                while (this.needToWait);
+                component.getConstructor().newInstance().call(this);
+                while (this.needToWait) ;
             }
         } catch (SocketException ignored) {
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException |
+                 NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void start() {
-        new Thread(this).start();
-    }
-
-    public void close() throws IOException {
-        this.client.close();
-        this.protocol.close();
     }
 }

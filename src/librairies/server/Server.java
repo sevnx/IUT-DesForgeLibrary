@@ -1,9 +1,9 @@
 package librairies.server;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.lang.reflect.InvocationTargetException;
 
 public class Server implements Runnable {
     private final int serverPort;
@@ -28,7 +28,7 @@ public class Server implements Runnable {
     public String getName() {
         return this.serverName;
     }
-    
+
     public String getIp() {
         return "127.0.0.1:" + this.serverPort;
     }
@@ -48,7 +48,8 @@ public class Server implements Runnable {
             try {
                 this.listenSocket.close();
             } catch (IOException ignored) {
-            } System.err.println("Problem on the listening serverPort: " + e);
+            }
+            System.err.println("Problem on the listening serverPort: " + e);
         } catch (IllegalAccessException | InstantiationException | InvocationTargetException | IOException e) {
             e.printStackTrace();
         }
