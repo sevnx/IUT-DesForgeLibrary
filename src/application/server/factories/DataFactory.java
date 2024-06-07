@@ -33,7 +33,7 @@ public class DataFactory {
     }
 
     private static void populateDocumentLogs() throws SQLException {
-        LOGGER.info("Populating document logs");
+        LOGGER.debug("Populating document logs");
         Vector<DocumentLogEntity> logs = new DocumentLogModel().get();
         for (DocumentLogEntity log : logs) {
             DataManager.addDocumentLog(log);
@@ -41,7 +41,7 @@ public class DataFactory {
     }
 
     private static void populateBaseDocuments() throws SQLException {
-        LOGGER.info("Populating base documents");
+        LOGGER.debug("Populating base documents");
         Vector<SimpleDocumentEntity> documents = new DocumentModel().get();
         for (SimpleDocumentEntity document : documents) {
             DataManager.addBaseDocument(document);
@@ -49,14 +49,14 @@ public class DataFactory {
     }
 
     private static void populateSubscribers() throws SQLException {
-        LOGGER.info("Populating subscribers");
+        LOGGER.debug("Populating subscribers");
         for (SimpleAbonneEntity subscriber : new SubscriberModel().get()) {
             DataManager.addSubscriber(subscriber);
         }
     }
 
     private static void populateDocuments() throws SQLException {
-        LOGGER.info("Populating documents");
+        LOGGER.debug("Populating documents");
         for (DocumentEntity document : new DvdModel().get()) {
             DataManager.addDocument(document);
         }

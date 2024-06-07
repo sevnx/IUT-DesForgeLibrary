@@ -1,17 +1,22 @@
 package application.server.models;
 
 import application.server.domain.entities.types.SimpleDocumentEntity;
+import application.server.domain.enums.DocumentState;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DocumentModel extends Model<SimpleDocumentEntity> {
-
-
+    private static final Logger LOGGER = LogManager.getLogger("Document - DB Model");
     @Override
     public void save(SimpleDocumentEntity entity) throws SQLException {
         int id = entity.getId();
-        int newState = entity.getState().getStateId();
+        DocumentState state = entity.getState();
+        int newState = state.getStateId();
+
+        LOGGER.debug("Updating document {} : new state {}", id, state.getName());
 
         PreparedStatement preparedStatement = super.prepareStatement("UPDATE " + getFullTableName() + " SET idState = ? WHERE id = ?");
         preparedStatement.setInt(1, newState);

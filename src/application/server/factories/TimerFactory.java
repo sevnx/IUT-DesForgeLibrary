@@ -29,6 +29,7 @@ public class TimerFactory {
     }
 
     private static void setupTimerTimes() {
+        LOGGER.debug("Setting up timer times (reading from configuration)");
         TimerConfig timerConfig = ConfigurationManager.getTimerConfig();
 
         long banUserTimeInSeconds = getOrThrowIfZero(timerConfig.banUserTime().toSeconds());
@@ -38,9 +39,11 @@ public class TimerFactory {
         BanUserTask.setDefaultDurationInSeconds(banUserTimeInSeconds);
         BorrowTask.setDefaultDurationInSeconds(borrowTimeInSeconds);
         ReservationTask.setDefaultDurationInSeconds(reservationTimeInSeconds);
+        LOGGER.debug("Timer times set");
     }
 
     private static void setupDocumentTimers() {
+        LOGGER.debug("Setting up document timers (reservations and borrows)");
         for (DocumentLogEntity log : DataManager.getDocumentLogs()) {
             SimpleDocumentEntity document = DataManager.getBaseDocument(log.getDocument().numero()).orElseThrow();
             switch (document.getState()) {
@@ -74,9 +77,11 @@ public class TimerFactory {
                 }
             }
         }
+        LOGGER.debug("Document timers set");
     }
 
     private static void setupUserTimers() {
+        LOGGER.debug("Setting up user timers (bans)");
         for (Abonne subscriber : DataManager.getSubscribers()) {
             if (subscriber.isBanned() && subscriber.bannedUntil().isPresent()) {
                 LocalDateTime bannedUntil = subscriber.bannedUntil().orElseThrow();
@@ -87,6 +92,7 @@ public class TimerFactory {
                 }
             }
         }
+        LOGGER.debug("User timers set");
     }
 
     private static long getOrThrowIfZero(long time) {

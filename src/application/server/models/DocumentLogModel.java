@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class DocumentLogModel extends Model<DocumentLogEntity> {
-    private static final Logger LOGGER = LogManager.getLogger("Document Log Model");
+    private static final Logger LOGGER = LogManager.getLogger("DocumentLog - DB Model");
 
     @Override
     public void save(DocumentLogEntity entity) throws SQLException {
@@ -22,7 +22,7 @@ public class DocumentLogModel extends Model<DocumentLogEntity> {
     }
 
     private void runInsert(DocumentLogEntity entity) throws SQLException {
-        LOGGER.info("Inserting new document log " + entity.getId());
+        LOGGER.debug("Inserting new document log {}", entity.getId());
         PreparedStatement preparedStatement = super.prepareStatement("INSERT INTO " + getFullTableName() + " (id, idSubscriber, time) VALUES (?, ?, ?)");
 
         preparedStatement.setInt(1, entity.getDocument().numero());
@@ -38,7 +38,7 @@ public class DocumentLogModel extends Model<DocumentLogEntity> {
     }
 
     private void runUpdate(DocumentLogEntity entity) throws SQLException {
-        LOGGER.info("Updating document log + " + entity.getId());
+        LOGGER.debug("Updating document log + {}", entity.getId());
         PreparedStatement preparedStatement = super.prepareStatement("UPDATE " + getFullTableName() + " SET idSubscriber = ?, time = ? WHERE id = ?");
 
         if (entity.getSubscriber().isPresent()) {

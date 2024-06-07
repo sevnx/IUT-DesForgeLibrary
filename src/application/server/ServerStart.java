@@ -12,7 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 public class ServerStart {
     public static void main(String[] args) {
         try {
-            Configurator.setRootLevel(Level.INFO);
+            Configurator.setRootLevel(Level.DEBUG);
             DatabaseFactory.setupDatabase();
             DataFactory.populateData();
             TimerFactory.setupTimers();
