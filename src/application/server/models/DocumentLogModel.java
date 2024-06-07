@@ -57,7 +57,6 @@ public class DocumentLogModel extends Model<DocumentLogEntity> {
         PreparedStatement preparedStatement = super.prepareStatement("SELECT * FROM " + getFullTableName() + " WHERE id = ?");
         preparedStatement.setInt(1, entity.getId());
         try {
-            LOGGER.info(preparedStatement.toString());
             return preparedStatement.executeQuery().next();
         } catch (SQLException e) {
             LOGGER.error("Error while checking if document log exists", e);

@@ -11,28 +11,10 @@ import java.nio.file.Paths;
 public class ConfigurationManager {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static DatabaseConfig getDatabaseConfig() {
+    public static <T> T getConfig(Class<T> configClass, String filePath) {
         try {
-            String json = new String(Files.readAllBytes(Paths.get(DatabaseConfig.getDatabaseConfigFilePath())));
-            return objectMapper.readValue(json, DatabaseConfig.class);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static TimerConfig getTimerConfig() {
-        try {
-            String json = new String(Files.readAllBytes(Paths.get(TimerConfig.getTimerConfigFilePath())));
-            return objectMapper.readValue(json, TimerConfig.class);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static ServerConfig getServerConfig() {
-        try {
-            String json = new String(Files.readAllBytes(Paths.get(ServerConfig.getServerConfigFilePath())));
-            return objectMapper.readValue(json, ServerConfig.class);
+            String json = new String(Files.readAllBytes(Paths.get(filePath)));
+            return objectMapper.readValue(json, configClass);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

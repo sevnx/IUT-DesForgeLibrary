@@ -3,18 +3,18 @@
     "days": 0,
     "hours": 0,
     "minutes": 0,
-    "seconds": 1
+    "seconds": 10
   },
   "documentBorrowTime": {
     "days": 0,
     "hours": 0,
-    "minutes": 0,
-    "seconds": 1
+    "minutes": 10,
+    "seconds": 0
   },
   "documentReservationTime": {
     "days": 0,
     "hours": 0,
     "minutes": 0,
-    "seconds": 1
+    "seconds": 20
   }
 }

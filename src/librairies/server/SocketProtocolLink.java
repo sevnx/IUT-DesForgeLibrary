@@ -10,6 +10,7 @@ import java.net.Socket;
 public abstract class SocketProtocolLink implements Runnable {
     protected final Socket client;
     protected final Protocol protocol;
+    private Thread socketLinkThread;
 
     public SocketProtocolLink(Socket socket) throws IOException {
         this.client = socket;
@@ -33,10 +34,12 @@ public abstract class SocketProtocolLink implements Runnable {
     }
 
     public void start() {
-        new Thread(this).start();
+        this.socketLinkThread = new Thread(this);
+        this.socketLinkThread.start();
     }
 
     public void close() throws IOException {
+        this.socketLinkThread.interrupt();
         this.client.close();
         this.protocol.close();
     }

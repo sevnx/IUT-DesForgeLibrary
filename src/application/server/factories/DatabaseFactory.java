@@ -1,5 +1,6 @@
 package application.server.factories;
 
+import application.server.configuration.DatabaseConfig;
 import application.server.managers.ConfigurationManager;
 import application.server.managers.DatabaseManager;
 import org.apache.logging.log4j.LogManager;
@@ -11,7 +12,7 @@ public class DatabaseFactory {
 
     public static void setupDatabase() {
         LOGGER.info("Setting up database");
-        DatabaseManager.setFromConfig(ConfigurationManager.getDatabaseConfig());
+        DatabaseManager.setFromConfig(ConfigurationManager.getConfig(DatabaseConfig.class, DatabaseConfig.getDatabaseConfigFilePath()));
         LOGGER.info("Database setup complete");
     }
 }

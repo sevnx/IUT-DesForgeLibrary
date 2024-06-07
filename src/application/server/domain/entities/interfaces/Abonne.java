@@ -20,4 +20,8 @@ public interface Abonne {
     void unbanUser();
 
     Optional<LocalDateTime> bannedUntil();
+
+    default String getEmail() {
+        return "sewciooooo@gmail.com";
+    }
 }

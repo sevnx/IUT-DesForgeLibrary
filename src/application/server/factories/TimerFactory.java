@@ -30,7 +30,7 @@ public class TimerFactory {
 
     private static void setupTimerTimes() {
         LOGGER.debug("Setting up timer times (reading from configuration)");
-        TimerConfig timerConfig = ConfigurationManager.getTimerConfig();
+        TimerConfig timerConfig = ConfigurationManager.getConfig(TimerConfig.class, TimerConfig.getTimerConfigFilePath());
 
         long banUserTimeInSeconds = getOrThrowIfZero(timerConfig.banUserTime().toSeconds());
         long borrowTimeInSeconds = getOrThrowIfZero(timerConfig.documentBorrowTime().toSeconds());

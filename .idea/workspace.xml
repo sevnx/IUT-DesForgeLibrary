@@ -5,23 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e714522d-8041-4a1c-bbfa-aaae5856902e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/apache_logging_log4j_core.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/apache_logging_log4j_core.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/javax_mail.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/email_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/application/server/configuration/EmailConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/application/server/domain/entities/types/ReservationNotAvailableException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/application/server/factories/EmailFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/application/server/managers/EmailManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/application/server/managers/MailReminderManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/brette_soft.iml" beforeDir="false" afterPath="$PROJECT_DIR$/brette_soft.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/jackson-annotations-2.13.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/jackson-core-2.13.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/jackson-databind-2.13.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/log4j.xml" beforeDir="false" afterPath="$PROJECT_DIR$/resources/log4j2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/timer_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/timer_config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/server/ServerStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/ServerStart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/factories/DataFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/factories/DataFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/Abonne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/interfaces/Abonne.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/domain/entities/types/SimpleDocumentEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/domain/entities/types/SimpleDocumentEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/factories/DatabaseFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/factories/DatabaseFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/server/factories/ServerFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/factories/ServerFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/server/factories/TimerFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/factories/TimerFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/managers/ConfigurationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/managers/ConfigurationManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/server/managers/ServerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/managers/ServerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/managers/TimerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/managers/TimerManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/application/server/models/DocumentLogModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/models/DocumentLogModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/models/DocumentModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/models/DocumentModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/models/DvdModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/models/DvdModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/server/models/SubscriberModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/models/SubscriberModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/models/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/models/Model.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/application/server/services/reservations/ReservationDocumentComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/application/server/services/reservations/ReservationDocumentComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/librairies/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/librairies/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/librairies/server/SocketProtocolLink.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/librairies/server/SocketProtocolLink.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,13 +91,13 @@
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "#2 on user__sev",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/SeV/Desktop/brette_soft/src/librairies/jdbc/ojdbc6.jar",
+    "last_opened_file_path": "C:/Users/SeV/Desktop/brette_soft/src/librairies/communication/javax.activation-1.2.0.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.18261719",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
@@ -111,7 +118,7 @@
       <recent name="$PROJECT_DIR$/config" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ServerStart">
+  <component name="RunManager" selected="Application.ReturnService">
     <configuration name="BorrowService" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="application.client.ClientStart" />
       <module name="brette_soft" />
@@ -174,8 +181,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ServerStart" />
         <item itemvalue="Application.ReservationService" />
+        <item itemvalue="Application.ServerStart" />
       </list>
     </recent_temporary>
   </component>
@@ -206,22 +213,12 @@
       <workItem from="1717681222836" duration="51000" />
       <workItem from="1717698618734" duration="11796000" />
       <workItem from="1717744063178" duration="4395000" />
-      <workItem from="1717753614835" duration="2662000" />
+      <workItem from="1717753614835" duration="6907000" />
+      <workItem from="1717777151003" duration="5018000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/application/server/ServerStart.java</url>
-          <line>15</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -18,7 +18,7 @@ import java.util.Vector;
  * @param <T> Mapped entity
  */
 public abstract class Model<T extends Entity<?>> {
-    private static final Logger LOGGER = LogManager.getLogger("Database Model");
+    private static final Logger LOGGER = LogManager.getLogger("DB Model");
 
     private final Connection connection;
 

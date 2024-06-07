@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -21,7 +22,7 @@ public class ServerFactory {
 
     public static void setupPorts() {
         LOGGER.info("Setting up server ports (reading from configuration)");
-        ServerConfig serverConfig = ConfigurationManager.getServerConfig();
+        ServerConfig serverConfig = ConfigurationManager.getConfig(ServerConfig.class, ServerConfig.getServerConfigFilePath());
 
         BorrowServer.setServicePort(serverConfig.documentBorrowServer().port());
         ReservationServer.setServicePort(serverConfig.documentReservationServer().port());
@@ -44,9 +45,14 @@ public class ServerFactory {
         LOGGER.info("Servers launched");
     }
 
-    public static void close() throws IOException {
+    public static void stop() throws IOException {
         for (Server server : launchedServers) {
-            ServerManager.stop(server);
+            try {
+                LOGGER.info("Calling stop on server {}", server.getName());
+                ServerManager.stop(server);
+            } catch (SocketException e) {
+                LOGGER.error("Error while stopping server", e);
+            }
         }
     }
 }

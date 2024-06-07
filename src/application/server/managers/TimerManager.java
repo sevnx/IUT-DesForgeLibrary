@@ -18,7 +18,7 @@ public class TimerManager {
 
         Timer savedTimer = new Timer();
 
-        LOGGER.info("Starting timer {} with duration {}", identifier, timer.getDurationInSeconds());
+        LOGGER.debug("Starting timer {} with duration {}", identifier, timer.getDurationInSeconds());
         savedTimer.schedule(timer, TimeUnit.SECONDS.toMillis(timer.getDurationInSeconds()));
         timerMap.put(identifier, new ControllableTimer(savedTimer, timer.isTimerCancelable()));
     }

@@ -2,7 +2,9 @@ package application.server.services.reservations;
 
 import application.server.domain.entities.interfaces.Abonne;
 import application.server.domain.entities.interfaces.Document;
+import application.server.domain.entities.types.ReservationNotAvailableException;
 import application.server.managers.DataManager;
+import application.server.managers.MailReminderManager;
 import application.server.services.ServiceUtils;
 import librairies.server.Component;
 import librairies.server.Service;
@@ -45,6 +47,13 @@ public class ReservationDocumentComponent implements Component {
             try {
                 document.reservation(subscriber);
                 reservationResponse.append("Réservation effectuée avec succès").append(System.lineSeparator());
+            } catch (ReservationNotAvailableException e) {
+                reservationResponse.append(e.getMessage()).append(System.lineSeparator());
+                boolean sendEmail = ServiceUtils.askBoolean(service, "Voulez-vous être notifié par email lorsque le document sera disponible ? (o/n)");
+                if (sendEmail) {
+                    MailReminderManager.addReminder(document, subscriber);
+                }
+                reservationResponse = new StringBuilder();
             } catch (Exception e) {
                 reservationResponse.append(e.getMessage()).append(System.lineSeparator());
             } finally {
