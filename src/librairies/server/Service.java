@@ -9,7 +9,7 @@ import java.net.SocketException;
 
 public abstract class Service extends SocketProtocolLink {
     private boolean needToWait = true;
-    private Class<? extends Component> component;
+    private final Class<? extends Component> component;
     private volatile boolean isRunning = false;
 
     public Service(Socket socket, Class<? extends Component> component, Class<? extends Protocol> protocol) throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {

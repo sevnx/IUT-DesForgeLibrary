@@ -13,12 +13,12 @@ public class ServerStart {
     public static void main(String[] args) {
         try {
             Configurator.setRootLevel(Level.INFO);
-
             DatabaseFactory.setupDatabase();
-            ServerFactory.launch();
             DataFactory.populateData();
-
             TimerFactory.setupTimers();
+
+            ServerFactory.setupPorts();
+            ServerFactory.launch();
         } catch (IllegalAccessException | InstantiationException | InvocationTargetException |
                  NoSuchMethodException e) {
             throw new RuntimeException(e);

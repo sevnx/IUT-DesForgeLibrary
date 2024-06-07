@@ -15,9 +15,9 @@ public interface Abonne {
 
     boolean isBanned();
 
-    void banUser() throws Exception;
+    void banUser();
 
-    void unbanUser() throws Exception;
+    void unbanUser();
 
     Optional<LocalDateTime> bannedUntil();
 }

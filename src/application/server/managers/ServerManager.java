@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 public class ServerManager {
-    public static Server start(Class<? extends Server> serverStart) throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException, InvocationTargetException {
+    public static Server start(Class<? extends Server> serverStart) throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         Server server = serverStart.getConstructor().newInstance();
 
         server.start();

@@ -11,9 +11,9 @@ import java.sql.SQLException;
 public class DvdEntity extends DocumentEntity {
     private static final String NOT_OLD_ENOUGH_MESSAGE = "Vous n'avez pas l'âge requis pour réserver ce document";
     private static final int ADULT_AGE = 16;
+    private final Object dvdLock = new Object();
     private SimpleDocumentEntity document;
     private boolean adult;
-
 
     @Override
     public void reservation(Abonne ab) throws ReservationException {
@@ -53,7 +53,7 @@ public class DvdEntity extends DocumentEntity {
 
     @Override
     public void save() throws SQLException {
-        synchronized (this) {
+        synchronized (dvdLock) {
             new DvdModel().save(this);
         }
     }

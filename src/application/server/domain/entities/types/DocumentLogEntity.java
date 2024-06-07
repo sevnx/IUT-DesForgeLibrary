@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class DocumentLogEntity extends SimpleEntity<DocumentLogModel> {
+    private final Object logLock = new Object();
     private Abonne subscriber;
     private SimpleDocumentEntity document;
     private LocalDateTime time;
@@ -44,7 +45,7 @@ public class DocumentLogEntity extends SimpleEntity<DocumentLogModel> {
 
     @Override
     public void save() throws SQLException {
-        synchronized (this) {
+        synchronized (logLock) {
             new DocumentLogModel().save(this);
         }
     }

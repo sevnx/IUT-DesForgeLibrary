@@ -1,9 +1,11 @@
 package application.server.factories;
 
 
+import application.server.configuration.TimerConfig;
 import application.server.domain.entities.interfaces.Abonne;
 import application.server.domain.entities.types.DocumentLogEntity;
 import application.server.domain.entities.types.SimpleDocumentEntity;
+import application.server.managers.ConfigurationManager;
 import application.server.managers.DataManager;
 import application.server.managers.TimerManager;
 import application.server.timer.tasks.BanUserTask;
@@ -19,8 +21,23 @@ public class TimerFactory {
     private static final Logger LOGGER = LogManager.getLogger("Timer Factory");
 
     public static void setupTimers() {
+        LOGGER.info("Setting up timers");
+        setupTimerTimes();
         setupDocumentTimers();
         setupUserTimers();
+        LOGGER.info("Timers setup complete");
+    }
+
+    private static void setupTimerTimes() {
+        TimerConfig timerConfig = ConfigurationManager.getTimerConfig();
+
+        long banUserTimeInSeconds = getOrThrowIfZero(timerConfig.banUserTime().toSeconds());
+        long borrowTimeInSeconds = getOrThrowIfZero(timerConfig.documentBorrowTime().toSeconds());
+        long reservationTimeInSeconds = getOrThrowIfZero(timerConfig.documentReservationTime().toSeconds());
+
+        BanUserTask.setDefaultDurationInSeconds(banUserTimeInSeconds);
+        BorrowTask.setDefaultDurationInSeconds(borrowTimeInSeconds);
+        ReservationTask.setDefaultDurationInSeconds(reservationTimeInSeconds);
     }
 
     private static void setupDocumentTimers() {
@@ -70,5 +87,12 @@ public class TimerFactory {
                 }
             }
         }
+    }
+
+    private static long getOrThrowIfZero(long time) {
+        if (time == 0) {
+            throw new IllegalArgumentException("Time cannot be 0 seconds");
+        }
+        return time;
     }
 }

@@ -5,6 +5,8 @@ import application.server.domain.entities.interfaces.Entity;
 import application.server.managers.TimerManager;
 import application.server.models.SubscriberModel;
 import application.server.timer.tasks.BanUserTask;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +17,8 @@ import java.time.Period;
 import java.util.Optional;
 
 public class SimpleAbonneEntity extends SimpleEntity<SubscriberModel> implements Abonne {
+    private static final Logger LOGGER = LogManager.getLogger("Base Abonne Entity");
+    private final Object banLock = new Object();
     private int id;
     private String firstName;
     private String lastName;
@@ -48,14 +52,32 @@ public class SimpleAbonneEntity extends SimpleEntity<SubscriberModel> implements
         return this;
     }
 
-    public void banUser() throws SQLException {
+    public void banUser() {
         banned = true;
-        this.save();
-        TimerManager.startTimer("TODO", new BanUserTask(this));
+        bannedUntil = Optional.of(LocalDateTime.now().plusSeconds(BanUserTask.getDefaultDurationInSeconds()));
+        BanUserTask banUserTask = new BanUserTask(this);
+        TimerManager.startTimer(banUserTask.getTaskIdentifier(), banUserTask);
+
+        try {
+            this.save();
+        } catch (SQLException e) {
+            LOGGER.error("Failed to ban user", e);
+            throw new RuntimeException("Failed to ban user", e);
+        }
     }
 
     public void unbanUser() {
-        banned = false;
+        synchronized (banLock) {
+            banned = false;
+            bannedUntil = Optional.empty();
+
+            try {
+                this.save();
+            } catch (SQLException e) {
+                LOGGER.error("Failed to unban user", e);
+                throw new RuntimeException("Failed to unban user", e);
+            }
+        }
     }
 
     @Override
@@ -65,7 +87,9 @@ public class SimpleAbonneEntity extends SimpleEntity<SubscriberModel> implements
 
     @Override
     public void save() throws SQLException {
-        new SubscriberModel().save(this);
+        synchronized (banLock) {
+            new SubscriberModel().save(this);
+        }
     }
 
     @Override

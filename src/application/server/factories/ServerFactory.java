@@ -1,5 +1,7 @@
 package application.server.factories;
 
+import application.server.configuration.ServerConfig;
+import application.server.managers.ConfigurationManager;
 import application.server.managers.ServerManager;
 import application.server.services.borrows.BorrowServer;
 import application.server.services.reservations.ReservationServer;
@@ -13,6 +15,14 @@ import java.util.Vector;
 
 public class ServerFactory {
     private static final Vector<Server> launchedServers = new Vector<>();
+
+    public static void setupPorts() {
+        ServerConfig serverConfig = ConfigurationManager.getServerConfig();
+
+        BorrowServer.setServicePort(serverConfig.documentBorrowServer().port());
+        ReservationServer.setServicePort(serverConfig.documentReservationServer().port());
+        ReturnServer.setServicePort(serverConfig.documentReturnServer().port());
+    }
 
     public static void launch() throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
         ArrayList<Class<? extends Server>> serverList = new ArrayList<>();

@@ -90,7 +90,6 @@ public abstract class Model<T extends Entity<?>> {
     }
 
     public PreparedStatement prepareStatement(String query) throws SQLException {
-        LOGGER.info("Preparing statement : " + query);
         return connection.prepareStatement(query);
     }
 }

@@ -57,7 +57,8 @@ public final class SimpleDocumentEntity extends DocumentEntity {
             }
             case FREE -> {
                 synchronized (stateLock) {
-                    TimerManager.startTimer("TODO", new ReservationTask(ab, this));
+                    ReservationTask task = new ReservationTask(ab, this);
+                    TimerManager.startTimer(task.getTaskIdentifier(), task);
                     processLog(ab, DocumentState.RESERVED);
                 }
             }
