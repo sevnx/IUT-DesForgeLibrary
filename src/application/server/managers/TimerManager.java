@@ -1,7 +1,7 @@
 package application.server.managers;
 
-import application.server.timer.interfaces.AbstractTimerTask;
-import application.server.timer.interfaces.ControllableTimer;
+import application.server.timers.ControllableTimer;
+import application.server.timers.TimerTask;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,16 +9,20 @@ import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * TimerManager class
+ * Manages the starting and stopping of different timers by storing them in the application
+ */
 public class TimerManager {
     private static final Logger LOGGER = LogManager.getLogger("Timer Manager");
 
     private static final ConcurrentHashMap<String, ControllableTimer> timerMap = new ConcurrentHashMap<>();
 
-    public static void startTimer(String identifier, AbstractTimerTask timer) {
+    public static void startTimer(String identifier, TimerTask timer) {
 
         Timer savedTimer = new Timer();
 
-        LOGGER.debug("Starting timer {} with duration {}", identifier, timer.getDurationInSeconds());
+        LOGGER.debug("Starting timers {} with duration {}", identifier, timer.getDurationInSeconds());
         savedTimer.schedule(timer, TimeUnit.SECONDS.toMillis(timer.getDurationInSeconds()));
         timerMap.put(identifier, new ControllableTimer(savedTimer, timer.isTimerCancelable()));
     }
@@ -32,5 +36,10 @@ public class TimerManager {
         } else {
             throw new IllegalArgumentException("Timer not found");
         }
+    }
+
+    public static void removeTimer(String identifier) {
+        LOGGER.debug("Removing timer {}", identifier);
+        timerMap.remove(identifier);
     }
 }

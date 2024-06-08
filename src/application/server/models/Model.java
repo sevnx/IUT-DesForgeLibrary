@@ -1,6 +1,6 @@
 package application.server.models;
 
-import application.server.domain.entities.interfaces.Entity;
+import application.server.entities.Entity;
 import application.server.managers.DatabaseManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,6 +26,12 @@ public abstract class Model<T extends Entity<?>> {
         this.connection = DatabaseManager.connect();
     }
 
+    /**
+     * Saves the entity to the database.
+     *
+     * @param entity Entity to save
+     * @throws SQLException If an error occurs while saving the entity
+     */
     public abstract void save(T entity) throws SQLException;
 
     public String getFullTableName() {
@@ -40,8 +46,14 @@ public abstract class Model<T extends Entity<?>> {
 
     public abstract T getEntityInstance();
 
+    /**
+     * Fetches all entries from the database and maps them to entities.
+     *
+     * @return Vector of entities (thread safe)
+     * @throws SQLException If an error occurs while fetching the entries
+     */
     public Vector<T> get() throws SQLException {
-        LOGGER.info("Fetching entries from database for " + this.getClass().getSimpleName());
+        LOGGER.info("Fetching entries from database for {}", this.getClass().getSimpleName());
         try {
             ResultSet resultSet = entries();
             Vector<T> entities = new Vector<>();
@@ -54,21 +66,24 @@ public abstract class Model<T extends Entity<?>> {
         }
     }
 
+    /**
+     * Maps the result set to an entity.
+     *
+     * @param resultSet Result set from a database query
+     * @return Mapped entity
+     * @throws SQLException If an error occurs while mapping the entity
+     */
     private T mapEntity(ResultSet resultSet) throws SQLException {
         T entity = getEntityInstance();
         return (T) entity.mapEntity(resultSet);
     }
 
-    public T get(int id) throws SQLException {
-        try {
-            ResultSet resultSet = entry(id);
-            resultSet.next();
-            return mapEntity(resultSet);
-        } catch (SQLException e) {
-            throw new SQLException("Error while fetching entry from database", e);
-        }
-    }
-
+    /**
+     * Fetches all entries from the database.
+     *
+     * @return Result set of entries
+     * @throws SQLException If an error occurs while fetching the entries
+     */
     private ResultSet entries() throws SQLException {
         try {
             return connection
@@ -79,16 +94,13 @@ public abstract class Model<T extends Entity<?>> {
         }
     }
 
-    private ResultSet entry(int id) throws SQLException {
-        try {
-            return connection
-                    .createStatement()
-                    .executeQuery("SELECT * FROM " + getFullTableName() + " WHERE id = " + id);
-        } catch (SQLException e) {
-            throw new SQLException("Error while fetching entry from database", e);
-        }
-    }
-
+    /**
+     * Prepares a statement for execution.
+     *
+     * @param query Query to prepare
+     * @return Prepared statement
+     * @throws SQLException If an error occurs while preparing the statement
+     */
     public PreparedStatement prepareStatement(String query) throws SQLException {
         return connection.prepareStatement(query);
     }

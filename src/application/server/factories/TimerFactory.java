@@ -1,22 +1,27 @@
 package application.server.factories;
 
 
-import application.server.configuration.TimerConfig;
-import application.server.domain.entities.interfaces.Abonne;
-import application.server.domain.entities.types.DocumentLogEntity;
-import application.server.domain.entities.types.SimpleDocumentEntity;
+import application.server.configs.TimerConfig;
+import application.server.entities.Abonne;
+import application.server.entities.types.DocumentLogEntity;
+import application.server.entities.types.SimpleDocumentEntity;
 import application.server.managers.ConfigurationManager;
 import application.server.managers.DataManager;
 import application.server.managers.TimerManager;
-import application.server.timer.tasks.BanUserTask;
-import application.server.timer.tasks.BorrowTask;
-import application.server.timer.tasks.ReservationTask;
+import application.server.timers.tasks.UnbanUserTask;
+import application.server.timers.tasks.BorrowTask;
+import application.server.timers.tasks.ReservationTask;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * TimerFactory class
+ * Sets up the timers for the application based on the configs
+ * and information from the database
+ */
 public class TimerFactory {
     private static final Logger LOGGER = LogManager.getLogger("Timer Factory");
 
@@ -29,16 +34,15 @@ public class TimerFactory {
     }
 
     private static void setupTimerTimes() {
-        LOGGER.debug("Setting up timer times (reading from configuration)");
+        LOGGER.debug("Setting up timers times (reading from configs)");
         TimerConfig timerConfig = ConfigurationManager.getConfig(TimerConfig.class, TimerConfig.getTimerConfigFilePath());
 
-        long banUserTimeInSeconds = getOrThrowIfZero(timerConfig.banUserTime().toSeconds());
-        long borrowTimeInSeconds = getOrThrowIfZero(timerConfig.documentBorrowTime().toSeconds());
-        long reservationTimeInSeconds = getOrThrowIfZero(timerConfig.documentReservationTime().toSeconds());
-
-        BanUserTask.setDefaultDurationInSeconds(banUserTimeInSeconds);
-        BorrowTask.setDefaultDurationInSeconds(borrowTimeInSeconds);
-        ReservationTask.setDefaultDurationInSeconds(reservationTimeInSeconds);
+        UnbanUserTask.setDefaultDurationInSeconds(getOrThrowIfZero(timerConfig.banUserTime().toSeconds()));
+        BorrowTask.setDefaultDurationInSeconds(
+                getOrThrowIfZero(timerConfig.documentBorrowTime().toSeconds()),
+                timerConfig.documentMaxLateReturnTime().toSeconds()
+        );
+        ReservationTask.setDefaultDurationInSeconds(getOrThrowIfZero(timerConfig.documentReservationTime().toSeconds()));
         LOGGER.debug("Timer times set");
     }
 
@@ -74,6 +78,7 @@ public class TimerFactory {
                     }
                 }
                 case FREE -> {
+                    // Do nothing
                 }
             }
         }
@@ -87,7 +92,7 @@ public class TimerFactory {
                 LocalDateTime bannedUntil = subscriber.bannedUntil().orElseThrow();
                 long duration = bannedUntil.minusNanos(LocalDateTime.now().getNano()).getSecond();
                 if (duration > 0) {
-                    BanUserTask task = new BanUserTask(subscriber, duration);
+                    UnbanUserTask task = new UnbanUserTask(subscriber, duration);
                     TimerManager.startTimer(task.getTaskIdentifier(), task);
                 }
             }

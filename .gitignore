@@ -23,3 +23,6 @@ hs_err_pid*
 replay_pid*
 
 out/
+
+# Configuration files
+config/email_config.json

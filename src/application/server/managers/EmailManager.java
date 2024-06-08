@@ -1,6 +1,6 @@
 package application.server.managers;
 
-import application.server.configuration.EmailConfig;
+import application.server.configs.EmailConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,6 +11,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 import java.util.Properties;
 
+/**
+ * EmailManager class
+ * Manages the sending of emails
+ */
 public class EmailManager {
     private static final Logger LOGGER = LogManager.getLogger("Email Manager");
     private static Optional<String> EMAIL_HOST = Optional.empty();
@@ -45,8 +49,6 @@ public class EmailManager {
         return new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                LOGGER.debug("Authenticating email user {}", getUser());
-                LOGGER.debug("Authenticating email password {}", getPassword());
                 return new PasswordAuthentication(getUser(), getPassword());
             }
         };
@@ -54,7 +56,7 @@ public class EmailManager {
 
     public static void sendEmail(String recipientEmail, String subject, String body) throws MessagingException, UnsupportedEncodingException {
         if (!isEmailConfigSet()) {
-            throw new IllegalStateException("Email configuration not set");
+            throw new IllegalStateException("Email configs not set");
         }
 
         Session session = Session.getInstance(getEmailProperties(), getAuthenticator());
@@ -62,8 +64,8 @@ public class EmailManager {
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(getUser(), "Médiathèque DesForge"));
         message.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(recipientEmail));
-        message.setSubject(subject);
-        message.setText(body);
+        message.setSubject(subject, "UTF-8");
+        message.setText(body, "UTF-8");
 
         Transport.send(message);
     }

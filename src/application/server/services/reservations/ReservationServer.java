@@ -1,6 +1,6 @@
 package application.server.services.reservations;
 
-import librairies.server.Server;
+import libraries.server.Server;
 
 import java.io.IOException;
 import java.util.Optional;

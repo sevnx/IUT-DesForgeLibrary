@@ -1,12 +1,15 @@
 package application.server.factories;
 
-import application.server.configuration.DatabaseConfig;
+import application.server.configs.DatabaseConfig;
 import application.server.managers.ConfigurationManager;
 import application.server.managers.DatabaseManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
+/**
+ * DatabaseFactory class
+ * Loads the database configs and sets up the database
+ */
 public class DatabaseFactory {
     private static final Logger LOGGER = LogManager.getLogger("Database Factory");
 

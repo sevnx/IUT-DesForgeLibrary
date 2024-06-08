@@ -1,17 +1,16 @@
 package application.server.services;
 
-import librairies.server.Service;
+import libraries.server.Service;
 
 import java.io.IOException;
 
+/**
+ * Utilities for communication in services
+ * Provides methods to ask for input and retry if the input is invalid
+ */
 public class ServiceUtils {
-    private static final String ASK_RETRY = "Voulez-vous réessayer ? (o/n)";
     private static final String INVALID_INPUT_MESSAGE = "Entrée incorrecte, veuillez réessayer.";
     private static final String ASK_MESSAGE = "Entrez votre valeur : ";
-
-    public static String askToRetry(Service service) throws IOException {
-        return ServiceUtils.askToRetry(service, ASK_MESSAGE);
-    }
 
     public static String askToRetry(Service service, String message) throws IOException {
         service.send(INVALID_INPUT_MESSAGE + System.lineSeparator() + message);

@@ -1,27 +1,30 @@
 package application.server.factories;
 
-import application.server.configuration.ServerConfig;
+import application.server.configs.ServerConfig;
 import application.server.managers.ConfigurationManager;
 import application.server.managers.ServerManager;
 import application.server.services.borrows.BorrowServer;
 import application.server.services.reservations.ReservationServer;
 import application.server.services.returns.ReturnServer;
-import librairies.server.Server;
+import libraries.server.Server;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
+/**
+ * ServerFactory class
+ * Sets up the server ports from the configs and launches the servers
+ */
 public class ServerFactory {
     private static final Logger LOGGER = LogManager.getLogger("Server Factory");
     private static final Vector<Server> launchedServers = new Vector<>();
 
     public static void setupPorts() {
-        LOGGER.info("Setting up server ports (reading from configuration)");
+        LOGGER.info("Setting up server ports (reading from configs)");
         ServerConfig serverConfig = ConfigurationManager.getConfig(ServerConfig.class, ServerConfig.getServerConfigFilePath());
 
         BorrowServer.setServicePort(serverConfig.documentBorrowServer().port());
@@ -30,29 +33,26 @@ public class ServerFactory {
         LOGGER.info("Server ports set");
     }
 
-    public static void launch() throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
-        LOGGER.info("Launching servers");
-        ArrayList<Class<? extends Server>> serverList = new ArrayList<>();
-
+    private static List<Class<? extends Server>> getServerList() {
+        List<Class<? extends Server>> serverList = new ArrayList<>();
         serverList.add(BorrowServer.class);
         serverList.add(ReservationServer.class);
         serverList.add(ReturnServer.class);
+        return serverList;
+    }
 
-        for (Class<? extends Server> serverClass : serverList) {
+    public static void launch() throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
+        LOGGER.info("Launching servers");
+        for (Class<? extends Server> serverClass : getServerList()) {
             Server server = ServerManager.start(serverClass);
             launchedServers.add(server);
         }
         LOGGER.info("Servers launched");
     }
 
-    public static void stop() throws IOException {
+    public static void stop() {
         for (Server server : launchedServers) {
-            try {
-                LOGGER.info("Calling stop on server {}", server.getName());
-                ServerManager.stop(server);
-            } catch (SocketException e) {
-                LOGGER.error("Error while stopping server", e);
-            }
+            ServerManager.stop(server);
         }
     }
 }

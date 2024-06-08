@@ -2,19 +2,25 @@
   "banUserTime": {
     "days": 0,
     "hours": 0,
-    "minutes": 0,
-    "seconds": 10
+    "minutes": 3,
+    "seconds": 0
   },
   "documentBorrowTime": {
     "days": 0,
     "hours": 0,
-    "minutes": 10,
+    "minutes": 3,
+    "seconds": 0
+  },
+  "documentMaxLateReturnTime": {
+    "days": 0,
+    "hours": 0,
+    "minutes": 3,
     "seconds": 0
   },
   "documentReservationTime": {
     "days": 0,
     "hours": 0,
-    "minutes": 0,
-    "seconds": 20
+    "minutes": 3,
+    "seconds": 0
   }
 }

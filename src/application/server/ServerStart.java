@@ -10,6 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class ServerStart {
     private static final Logger LOGGER = LogManager.getLogger("Server Start");
+
     public static void main(String[] args) {
         try {
             Configurator.setRootLevel(Level.DEBUG);
@@ -30,7 +31,7 @@ public class ServerStart {
                 } catch (Exception e) {
                     LOGGER.error("Error while shutting down the server", e);
                 }
-            }));
+            }, "Shutdown Thread"));
         } catch (IllegalAccessException | InstantiationException | InvocationTargetException |
                  NoSuchMethodException e) {
             throw new RuntimeException(e);

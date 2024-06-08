@@ -1,6 +1,0 @@
-{
-  "emailHost": "smtp-mail.outlook.com",
-  "emailPort": 587,
-  "emailUser": "XXX",
-  "emailPassword": "XXX"
-}

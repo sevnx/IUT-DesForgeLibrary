@@ -1,12 +1,15 @@
 package application.server.managers;
 
-import librairies.server.Server;
+import libraries.server.Server;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * ServerManager class
+ * Manages the starting and stopping of servers
+ */
 public class ServerManager {
     private static final Logger LOGGER = LogManager.getLogger("Server Manager");
 
@@ -17,8 +20,8 @@ public class ServerManager {
         return server;
     }
 
-    public static void stop(Server serverStop) throws IOException {
+    public static void stop(Server serverStop) {
         serverStop.stop();
-        LOGGER.info("Stopping server {} on port {}", serverStop.getName(), serverStop.getIp());
+        System.out.println("Stopping server " + serverStop.getName() + " on port " + serverStop.getIp());
     }
 }

@@ -1,20 +1,27 @@
 package application.server.factories;
 
-import application.server.domain.entities.types.DocumentEntity;
-import application.server.domain.entities.types.DocumentLogEntity;
-import application.server.domain.entities.types.SimpleAbonneEntity;
-import application.server.domain.entities.types.SimpleDocumentEntity;
+import application.server.entities.types.DocumentEntity;
+import application.server.entities.types.DocumentLogEntity;
+import application.server.entities.types.SimpleAbonneEntity;
+import application.server.entities.types.SimpleDocumentEntity;
 import application.server.managers.DataManager;
-import application.server.models.DocumentLogModel;
-import application.server.models.DocumentModel;
-import application.server.models.DvdModel;
-import application.server.models.SubscriberModel;
+import application.server.models.Model;
+import application.server.models.types.DocumentLogModel;
+import application.server.models.types.DocumentModel;
+import application.server.models.types.DvdModel;
+import application.server.models.types.SubscriberModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
+/**
+ * DataFactory class
+ * Populates the data in the DataManager from the database
+ */
 public class DataFactory {
     private static final Logger LOGGER = LogManager.getLogger("Data Factory");
 
@@ -30,6 +37,12 @@ public class DataFactory {
             throw new RuntimeException("Error while fetching data from database :", e);
         }
         LOGGER.info("Data population complete");
+    }
+
+    private static List<Model<? extends DocumentEntity>> getDocumentTypeModels() {
+        List<Model<? extends DocumentEntity>> models = new ArrayList<>();
+        models.add(new DvdModel());
+        return models;
     }
 
     private static void populateDocumentLogs() throws SQLException {
@@ -57,8 +70,10 @@ public class DataFactory {
 
     private static void populateDocuments() throws SQLException {
         LOGGER.debug("Populating documents");
-        for (DocumentEntity document : new DvdModel().get()) {
-            DataManager.addDocument(document);
+        for (Model<? extends DocumentEntity> model : getDocumentTypeModels()) {
+            for (DocumentEntity document : model.get()) {
+                DataManager.addDocument(document);
+            }
         }
     }
 }

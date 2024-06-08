@@ -1,12 +1,15 @@
 package application.server.managers;
 
-import application.server.configuration.DatabaseConfig;
+import application.server.configs.DatabaseConfig;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Optional;
 
+/**
+ * The DatabaseManager class is responsible for managing the database connection
+ */
 public class DatabaseManager {
     private static Connection connection;
 
